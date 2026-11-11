@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>แบบทดสอบการพูด | โครงการวิจัยการคัดกรองภาวะสมองเสื่อมจากเสียงพูด</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A2540;
+  --blue:#1A5FD0;
+  --blue-d:#0F47A8;
+  --blue-l:#E9F1FD;
+  --page:#F2F5F9;
+  --paper:#FFFFFF;
+  --line:#D3DCE8;
+  --line-2:#B7C4D6;
+  --ink:#142235;
+  --ink-2:#4B5B70;
+  --ok:#137A4B;--ok-l:#E6F4EC;
+  --warn:#9A5600;--warn-l:#FDF3E3;
+  --err:#C0262D;--err-l:#FCECEC;
+  --fs:20px;
+}
+html.fs-1{--fs:23px}
+html.fs-2{--fs:26px}
+html.hc{--navy:#000;--blue:#0039A6;--blue-d:#00276F;--blue-l:#fff;--page:#fff;--line:#000;--line-2:#000;--ink:#000;--ink-2:#111;--ok-l:#fff;--warn-l:#fff;--err-l:#fff}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:var(--fs);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:"IBM Plex Sans Thai","Noto Sans Thai","Leelawadee UI","Thonburi",system-ui,sans-serif;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #F2B705;outline-offset:2px}
+h1[tabindex="-1"]:focus{outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+a{color:var(--blue)}
+
+/* ---------- header ---------- */
+.gov{background:var(--paper);border-bottom:4px solid var(--blue)}
+.gov-in{max-width:1180px;margin:0 auto;padding:.75rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.8rem;flex:1;min-width:16rem}
+.brand img{height:2.8rem;width:auto}
+.brand .org{font-size:.72rem;color:var(--ink-2);line-height:1.35}
+.brand .sys{font-size:.95rem;font-weight:700;color:var(--navy);line-height:1.35}
+.a11y{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2);flex-wrap:wrap}
+.a11y .grp{display:flex;border:1px solid var(--line-2);border-radius:4px;overflow:hidden}
+.a11y button{background:var(--paper);border:none;border-left:1px solid var(--line-2);min-width:40px;height:40px;padding:0 10px;cursor:pointer;font-weight:600;color:var(--navy);font-size:14px;white-space:nowrap}
+.a11y .grp button:first-child{border-left:none}
+.a11y button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.a11y .grp button.f0{font-size:14px}.a11y .grp button.f1{font-size:17px}.a11y .grp button.f2{font-size:20px}
+.a11y .solo{border:1px solid var(--line-2);border-radius:4px}
+
+/* ---------- layout ---------- */
+.wrap{flex:1;width:100%;max-width:1180px;margin:0 auto;padding:1.5rem 1.25rem 7.5rem;display:grid;grid-template-columns:15rem 1fr;gap:2rem;align-items:start}
+.wrap.solo{grid-template-columns:1fr;max-width:860px}
+.wrap.solo .steps{display:none}
+.steps{position:sticky;top:1rem;font-size:.8rem}
+.steps-h{font-weight:700;color:var(--ink-2);margin:0 0 .5rem;font-size:.75rem}
+.steps ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.steps li{display:flex;gap:.6rem;align-items:center;padding:.45rem 0 .45rem .9rem;margin-left:-2px;border-left:2px solid transparent;color:var(--ink-2)}
+.steps li .n{flex:none;width:1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid var(--line-2);display:grid;place-items:center;font-size:.7rem;font-weight:600;background:var(--paper)}
+.steps li.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
+.steps li.now{border-left-color:var(--blue);color:var(--navy);font-weight:700}
+.steps li.now .n{background:var(--blue);border-color:var(--blue);color:#fff}
+.mstep{display:none}
+main{min-width:0}
+
+/* ---------- page content ---------- */
+.screen{display:none}
+.screen.on{display:block}
+.crumb{font-size:.75rem;color:var(--ink-2);margin:0 0 .2rem}
+h1{font-size:1.5rem;line-height:1.35;margin:0 0 1rem;color:var(--navy);font-weight:700}
+.sub{margin:-.6rem 0 1.2rem;color:var(--ink-2);font-size:.9rem;max-width:42em}
+p{margin:0 0 .8rem;max-width:42em}
+.muted{color:var(--ink-2);font-size:.82rem}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:4px;margin-bottom:1.2rem}
+.panel-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem 1rem;padding:.65rem 1.1rem;border-bottom:1px solid var(--line);background:#F7F9FC}
+html.hc .panel-h{background:#fff}
+.panel-h h2{margin:0;font-size:.95rem;color:var(--navy);font-weight:700}
+.panel-b{padding:1.1rem}
+.btn2{display:inline-flex;align-items:center;gap:.4rem;background:var(--paper);border:1px solid var(--line-2);border-radius:4px;padding:.3rem .8rem;font-size:.78rem;font-weight:600;color:var(--blue);cursor:pointer;white-space:nowrap}
+.btn2 svg{width:1rem;height:1rem}
+
+/* definition table */
+.dl{display:grid;grid-template-columns:11rem 1fr;margin:0}
+.dl dt,.dl dd{padding:.6rem 0;border-bottom:1px solid var(--line);margin:0}
+.dl dt{font-weight:600;color:var(--ink-2);font-size:.88rem;padding-right:1rem}
+.dl dt:last-of-type,.dl dd:last-of-type{border-bottom:none}
+.olist{margin:0;padding:0;list-style:none;counter-reset:s}
+.olist li{counter-increment:s;display:flex;gap:.8rem;padding:.45rem 0}
+.olist li::before{content:counter(s);flex:none;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--blue-l);color:var(--blue-d);font-weight:700;font-size:.8rem;display:grid;place-items:center}
+html.hc .olist li::before{border:1px solid #000}
+.notice{border-left:4px solid var(--blue);background:var(--blue-l);padding:.75rem 1rem;margin:0 0 1.2rem;font-size:.9rem}
+.notice p{margin:0}
+.resume{border:2px solid var(--blue);background:var(--blue-l);border-radius:4px;padding:1rem 1.1rem;margin-bottom:1.2rem}
+.resume p{margin:0 0 .7rem}
+
+/* consent document */
+.doc{max-height:52vh;overflow:auto;padding:1.1rem}
+.doc h3{font-size:.92rem;margin:1.1rem 0 .3rem;color:var(--navy)}
+.doc h3:first-child{margin-top:0}
+.doc p,.doc li{font-size:.86rem;max-width:none}
+.doc ul{margin:.2rem 0 .6rem;padding-left:1.2rem}
+.check{display:flex;gap:.8rem;align-items:flex-start;padding:.85rem 1rem;border:1px solid var(--line-2);border-radius:4px;margin-top:.6rem;cursor:pointer;background:var(--paper)}
+.check input{flex:none;width:1.45rem;height:1.45rem;margin:.18rem 0 0;accent-color:var(--blue)}
+.check:has(input:checked){border-color:var(--blue);background:var(--blue-l)}
+.err{color:var(--err);font-size:.75rem;display:none}
+
+/* forms */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.3rem}
+.field{display:flex;flex-direction:column;gap:.3rem}
+.field.full{grid-column:1/-1}
+.field>label,.field>.lab{font-weight:600;font-size:.88rem}
+.req{color:var(--err)}
+.opt{font-weight:400;color:var(--ink-2);font-size:.75rem}
+.field input[type=text],.field input[type=number],.field input[type=password],.field select,.field textarea{border:1px solid var(--line-2);border-radius:4px;padding:.6rem .75rem;background:var(--paper);min-height:3rem;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(26,95,208,.22)}
+.field.bad input,.field.bad select,.field.bad .seg{border-color:var(--err)}
+.field.bad .err{display:block}
+.seg{display:flex;flex-wrap:wrap;gap:.45rem;border:1px solid transparent;border-radius:4px}
+.seg label{flex:1 1 auto;min-width:5rem;position:relative}
+.seg input{position:absolute;inset:0;opacity:0;margin:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:.6rem .7rem;border:1px solid var(--line-2);border-radius:4px;cursor:pointer;background:var(--paper);font-size:.9rem}
+.seg input:checked+span{border-color:var(--blue);background:var(--blue);color:#fff;font-weight:600}
+.seg input:focus-visible+span{outline:3px solid #F2B705;outline-offset:2px}
+.sid{white-space:nowrap;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.sid-box{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;border:1px dashed var(--line-2);border-radius:4px;padding:.7rem 1rem;margin-bottom:1.2rem;background:var(--paper)}
+.sid-box .sid{font-size:1.15rem}
+
+/* questionnaire */
+.q-meta{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.q-pos{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.q-bar{height:6px;background:var(--line);margin:.7rem 0 1.2rem}
+.q-bar i{display:block;height:100%;background:var(--blue);transition:width .25s}
+.q-stem{font-size:.85rem;color:var(--ink-2);margin:0 0 .3rem}
+.q-text{font-size:1.3rem;font-weight:700;line-height:1.45;margin:0 0 1.1rem;color:var(--navy);min-height:2.9em}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.answers.iq{grid-template-columns:1fr}
+.ans .sc{margin-left:auto;font-size:.75rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.ans-hint{display:block;font-size:.72rem;color:var(--ink-2);font-weight:400;margin-top:.1rem}
+.ans-na{margin-top:.6rem;background:#F7F9FC;border-style:dashed;font-size:.9rem;min-height:3rem}
+.iq-instr summary{cursor:pointer;list-style:none}
+.iq-instr summary::-webkit-details-marker{display:none}
+.iq-instr .panel-b p{font-size:.9rem}
+.ans{display:flex;align-items:center;gap:.8rem;width:100%;text-align:left;padding:.9rem 1rem;border:1px solid var(--line-2);border-radius:4px;background:var(--paper);cursor:pointer;font-size:1rem;min-height:3.6rem}
+.ans .box{flex:none;width:1.35rem;height:1.35rem;border-radius:50%;border:2px solid var(--line-2);background:var(--paper)}
+@media (hover:hover){.ans:hover{border-color:var(--blue)}}
+.ans[aria-checked="true"]{border:2px solid var(--blue);background:var(--blue-l);font-weight:600;padding:calc(.9rem - 1px) calc(1rem - 1px)}
+.ans[aria-checked="true"] .box{border:.42rem solid var(--blue)}
+.q-nav{display:flex;justify-content:space-between;margin-top:1rem}
+.linkbtn{background:none;border:none;color:var(--blue);font-weight:600;cursor:pointer;padding:.4rem 0;text-decoration:underline;text-underline-offset:3px}
+.linkbtn:disabled{color:var(--line-2);cursor:default;text-decoration:none}
+
+/* task + recorder console */
+.task-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1.2rem}
+.task-grid>*{min-width:0}
+.task-grid.ctd{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start}
+.ctd-fig{margin:0;border:1px solid var(--line);border-radius:4px;background:#fff;padding:.5rem;text-align:center}
+.ctd-fig img{max-width:100%;max-height:56vh;display:block;margin:0 auto}
+.ctd-fig figcaption{font-size:.7rem;color:var(--ink-2);margin-top:.3rem}
+.ctd-missing{padding:3rem 1rem;color:var(--ink-2);font-size:.85rem;background:#F7F9FC}
+.console{background:var(--navy);color:#fff;border-radius:4px;padding:1.1rem 1.2rem 1.2rem}
+.c-top{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:#B9C8DE;min-height:1.5rem}
+.c-state{display:flex;align-items:center;gap:.45rem;font-weight:600}
+.c-state i{width:.65rem;height:.65rem;border-radius:50%;background:#7C8DA6}
+.console[data-state="recording"] .c-state{color:#fff}
+.console[data-state="recording"] .c-state i{background:#FF4D4F;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.c-time{font-size:4.2rem;font-weight:600;line-height:1.1;text-align:center;font-variant-numeric:tabular-nums;letter-spacing:.02em;margin:.5rem 0 .2rem}
+.console[data-state="count"] .c-time{color:#8EC5FF}
+.c-prog{height:8px;background:rgba(255,255,255,.16);border-radius:4px;overflow:hidden}
+.c-prog i{display:block;height:100%;width:0;background:#4D9BFF;transition:width .25s linear}
+.c-lvl{display:flex;gap:3px;height:1.1rem;margin-top:.8rem;align-items:flex-end}
+.c-lvl b{flex:1;background:rgba(255,255,255,.14);height:100%;border-radius:1px}
+.c-lvl b.on{background:#3DDC97}
+.c-lvl b.hot{background:#FFB020}
+.c-cap{display:flex;justify-content:space-between;font-size:.65rem;color:#8FA3BF;margin-top:.25rem}
+.rec-actions{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap}
+.rec-actions .btn{flex:1}
+.btn-rec{background:var(--blue);color:#fff}
+.btn-rec .dot{width:.85rem;height:.85rem;border-radius:50%;background:#FF4D4F;border:2px solid #fff}
+.btn-rec:disabled{background:#3B4E68;color:#B9C8DE;cursor:default}
+.btn-cancel{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45)}
+.result{border:1px solid;border-left-width:5px;border-radius:4px;padding:.9rem 1rem;margin-top:1.1rem}
+.result h3{margin:0 0 .25rem;font-size:1rem}
+.result p{margin:0 0 .5rem}
+.result.ok{border-color:var(--ok);background:var(--ok-l)}.result.ok h3{color:var(--ok)}
+.result.warn{border-color:var(--warn);background:var(--warn-l)}.result.warn h3{color:var(--warn)}
+.result.fail{border-color:var(--err);background:var(--err-l)}.result.fail h3{color:var(--err)}
+.result audio{width:100%;max-width:440px;margin:.2rem 0 .4rem;display:block}
+.result .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.meter{height:12px;background:var(--line);overflow:hidden;margin:.8rem 0}
+.meter i{display:block;height:100%;width:0;background:var(--ok);transition:width .08s}
+
+/* resume code */
+.code-box{display:flex;align-items:center;gap:.6rem 1.2rem;flex-wrap:wrap;border:2px solid var(--blue);background:var(--blue-l);border-radius:4px;padding:.8rem 1rem;margin-bottom:1.2rem}
+.code-box .code{font-size:min(1.5rem,9vw);font-weight:700;letter-spacing:.12em;color:var(--navy);font-variant-numeric:tabular-nums;white-space:nowrap}
+.code-box .muted{flex-basis:100%;margin:0}
+.code-in{display:flex;gap:.6rem;flex-wrap:wrap;align-items:flex-end}
+.code-in .field{flex:1 1 12rem;min-width:0}
+.code-in .btn{flex:1 1 auto}
+.code-in input{text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.missing{margin:.4rem 0 0;padding-left:1.2rem}
+/* receipt */
+.receipt{border:1px solid var(--line);border-top:5px solid var(--ok);background:var(--paper);border-radius:4px;padding:1.3rem 1.3rem 1rem;margin-bottom:1.2rem}
+.receipt h1{margin-bottom:.5rem}
+.upl{list-style:none;padding:0;margin:0}
+.upl li{display:flex;justify-content:space-between;gap:.6rem;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.upl li:last-child{border-bottom:none}
+.s-ok{color:var(--ok);font-weight:700}.s-wait{color:var(--warn);font-weight:700}.s-bad{color:var(--err);font-weight:700}
+
+/* action bar */
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);z-index:5;padding-bottom:env(safe-area-inset-bottom)}
+.bar-in{max-width:1180px;margin:0 auto;padding:.7rem 1.25rem;display:flex;gap:.8rem;align-items:center}
+.bar .net{flex:1;font-size:.72rem;color:var(--ink-2);min-width:0;text-align:center}
+.btn{white-space:nowrap;border:none;border-radius:4px;min-height:3.2rem;padding:.55rem 1.5rem;font-weight:600;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-main{background:var(--blue);color:#fff;min-width:10rem}
+.btn-main:hover{background:var(--blue-d)}
+.btn-main:disabled{background:#A9B6C8;cursor:not-allowed}
+.btn-back{background:var(--paper);color:var(--navy);border:1px solid var(--line-2)}
+.btn-sm{min-height:2.6rem;font-size:.85rem;padding:.4rem 1rem}
+
+/* staff dialog */
+dialog{border:none;border-radius:4px;padding:0;width:min(780px,96vw);max-height:92vh;color:var(--ink)}
+dialog::backdrop{background:rgba(10,37,64,.6)}
+.dlg-h{background:var(--navy);color:#fff;padding:.75rem 1.2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1}
+.dlg-h h2{margin:0;color:#fff;font-size:.95rem}
+.dlg-h button{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:4px;padding:.2rem .8rem;cursor:pointer;font-size:.8rem}
+.dlg-b{padding:1.2rem}
+.dlg-b h3{font-size:.88rem;margin:1.3rem 0 .6rem;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:.3rem}
+.dlg-b h3:first-child{margin-top:0}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem;font-size:.8rem;margin:0}
+.kv dt{color:var(--ink-2)}.kv dd{margin:0;font-weight:600}
+.att{width:100%;border-collapse:collapse;font-size:.72rem}
+.att th,.att td{border-bottom:1px solid var(--line);padding:.4rem .3rem;text-align:left}
+.att th{color:var(--ink-2);font-weight:600}
+.toast{position:fixed;left:50%;bottom:6.5rem;transform:translateX(-50%);background:var(--navy);color:#fff;padding:.6rem 1.1rem;border-radius:4px;font-size:.85rem;z-index:20;display:none;max-width:90vw}
+
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:0;padding-top:0}
+  .steps{display:none}
+  .mstep{display:block;margin:0 -1.25rem 1.2rem;padding:.7rem 1.25rem;background:var(--paper);border-bottom:1px solid var(--line);font-size:.8rem;color:var(--ink-2)}
+  .mstep b{color:var(--navy)}
+  .mstep .q-bar{margin:.45rem 0 0;height:5px}
+  .task-grid.ctd{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  html{font-size:calc(var(--fs) - 2px)}
+  .gov-in{padding:.6rem 1rem}
+  .brand{min-width:0}
+  .brand .org{display:none}
+  .sys-2{display:none}
+  .gov-in{gap:.5rem}
+  .brand{flex-basis:100%}
+  .a11y{flex-basis:100%;justify-content:flex-end}
+  .a11y .lbl{display:none}
+  .wrap{padding-left:1rem;padding-right:1rem}
+  .mstep{margin:0 -1rem 1rem;padding:.6rem 1rem}
+  .grid,.answers{grid-template-columns:1fr}
+  .dl{grid-template-columns:1fr}
+  .dl dt{border-bottom:none;padding-bottom:0}
+  .panel-b{padding:1rem .9rem}
+  .c-time{font-size:min(3.6rem,19vw)}
+  .bar-in{flex-wrap:wrap;row-gap:.3rem;padding:.6rem 1rem}
+  .bar .net{order:-1;flex-basis:100%}
+  .bar .net:empty{display:none}
+  .btn-main{min-width:0;flex:1}
+  .bar .btn{padding:.5rem .9rem}
+  .bar .btn-back{flex:none}
+  .rec-actions .btn{padding:.5rem .8rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="gov">
+  <div class="gov-in">
+    <div class="brand">
+      <img id="logo" alt="" hidden>
+      <div><div class="org" id="hdrOrg"></div><div class="sys">ระบบเก็บข้อมูลเสียงพูด<span class="sys-2"> โครงการวิจัยการคัดกรองภาวะสมองเสื่อม</span></div></div>
+    </div>
+    <div class="a11y">
+      <span class="lbl">ขนาดตัวอักษร</span>
+      <div class="grp" role="group" aria-label="ขนาดตัวอักษร">
+        <button class="f0" data-fs="0" aria-pressed="true" aria-label="ขนาดปกติ">ก</button>
+        <button class="f1" data-fs="1" aria-pressed="false" aria-label="ขนาดใหญ่">ก</button>
+        <button class="f2" data-fs="2" aria-pressed="false" aria-label="ขนาดใหญ่พิเศษ">ก</button>
+      </div>
+      <button class="solo" id="btnContrast" aria-pressed="false">สีเข้ม</button>
+      <button class="solo" id="btnStaff">เจ้าหน้าที่</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="wrap">
+<aside class="steps" aria-label="ขั้นตอน"><p class="steps-h">ขั้นตอนการทดสอบ</p><ol id="rail"></ol></aside>
+<main id="main">
+<div class="mstep" id="mstep"></div>
+
+<!-- WELCOME -->
+<section class="screen" data-step="welcome">
+  <p class="crumb" id="welcomeProject"></p>
+  <h1 id="h-welcome">แบบทดสอบการพูดสำหรับผู้เข้าร่วมโครงการวิจัย</h1>
+  <p class="sub">แบบทดสอบนี้ใช้เก็บเสียงพูด ใช้เวลาประมาณ 15 นาที โดยทำตามขั้นตอนบนหน้าจอทีละขั้น</p>
+  <div class="notice"><p><b>ช่วงทดลองระบบ:</b> โครงการยังไม่ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ ข้อมูลที่เก็บในช่วงนี้ใช้ทดสอบและปรับปรุงระบบเท่านั้น ไม่นำไปใช้เป็นผลการวิจัย</p></div>
+  <div class="resume" id="resumeBox" hidden>
+    <p><b>พบการทดสอบที่ยังทำไม่เสร็จ</b><br><span class="muted" id="resumeInfo"></span></p>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <button class="btn btn-main btn-sm" id="btnResume">ทำต่อจากเดิม</button>
+      <button class="btn btn-back btn-sm" id="btnFresh">เริ่มผู้เข้าร่วมคนใหม่</button>
+    </div>
+  </div>
+  <div class="panel" id="codePanel">
+    <div class="panel-h"><h2>กลับมาทำต่อ</h2></div>
+    <div class="panel-b">
+      <p class="muted">ถ้าเคยทำไว้แล้วบางส่วน ใส่รหัสกลับมาทำต่อ 8 ตัวที่ได้รับ เพื่อบันทึกข้อที่เหลือ</p>
+      <div class="code-in">
+        <div class="field" id="f-code"><label for="resumeCode">รหัสกลับมาทำต่อ</label><input id="resumeCode" type="text" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="เช่น ABCD-2345"><span class="err" id="codeErr">ไม่พบรหัสนี้</span></div>
+        <button class="btn btn-back" id="btnCode">ทำต่อด้วยรหัสนี้</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h2>ก่อนเริ่ม</h2></div>
+    <div class="panel-b">
+      <dl class="dl">
+        <dt>ระยะเวลา</dt><dd>ประมาณ 15 นาที หยุดพักได้ ระบบจะบันทึกไว้ว่าทำถึงขั้นไหน</dd>
+        <dt>ผู้เข้าร่วม</dt><dd>อายุ 18 ปีขึ้นไป และตัดสินใจให้ความยินยอมได้ด้วยตนเอง</dd>
+        <dt>สถานที่</dt><dd>ห้องที่เงียบ ปิดพัดลม โทรทัศน์ หรือเสียงอื่นที่รบกวน</dd>
+        <dt>อุปกรณ์</dt><dd>โทรศัพท์หรือคอมพิวเตอร์ที่มีไมโครโฟน และอินเทอร์เน็ต</dd>
+        <dt>ข้อมูลส่วนบุคคล</dt><dd>ใช้รหัสผู้เข้าร่วมแทนชื่อ และใช้เพื่อทดสอบระบบเท่านั้น</dd>
+        <dt>ผลการทดสอบ</dt><dd>ระบบไม่แสดงผลการประเมินหรือผลวินิจฉัย</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h2>ขั้นตอน</h2></div>
+    <div class="panel-b">
+      <ol class="olist">
+        <li>อ่านข้อมูลโครงการและให้ความยินยอม</li>
+        <li>กรอกข้อมูลพื้นฐาน เช่น อายุ เพศ ระดับการศึกษา</li>
+        <li>ญาติหรือคนที่รู้จักผู้เข้าร่วมทดสอบดี ตอบแบบสอบถามความเปลี่ยนแปลงของความจำ 16 ข้อ</li>
+        <li>ทดสอบไมโครโฟน 6 วินาที</li>
+        <li>พูดตามโจทย์ 3 ข้อ ข้อละ 1 นาที ทำไม่ครบในครั้งเดียวก็ได้ กลับมาทำข้อที่เหลือภายหลังด้วยรหัสกลับมาทำต่อ</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- CONSENT -->
+<section class="screen" data-step="consent">
+  <h1 id="h-consent">ข้อมูลโครงการและการแสดงความยินยอม</h1>
+  <div class="notice"><p><b>ช่วงทดลองระบบ:</b> โครงการนี้ยังไม่ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ การเข้าร่วมในช่วงนี้เป็นการทดลองระบบเบื้องต้น ไม่ใช่การเข้าร่วมการวิจัยที่ได้รับการรับรองแล้ว</p></div>
+  <div class="panel">
+    <div class="panel-h"><h2>เอกสารชี้แจงข้อมูลและขอความยินยอมเข้าร่วมการทดลองระบบ</h2><button class="btn2" data-say="consent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>อ่านออกเสียง</button></div>
+    <div class="doc" tabindex="0" aria-label="เอกสารชี้แจง">
+      <h3>1. ชื่อโครงการ</h3>
+      <p><b id="cProject"></b><br><i>Speech-Based Dementia Screening in the Elderly Using Acoustic and Linguistic Features</i></p>
+      <h3>2. ผู้จัดทำ</h3>
+      <p id="cAuthor"></p>
+      <h3>3. สถานะของโครงการ</h3>
+      <p>ขณะนี้โครงการอยู่ในช่วงทดลองระบบเพื่อทดสอบการทำงานของเว็บไซต์และปรับปรุงขั้นตอนการใช้งาน โดย<b>โครงการยังไม่ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์</b> และผู้จัดทำอยู่ระหว่างการดำเนินการเพื่อขอรับการพิจารณาตามขั้นตอนของมหาวิทยาลัย</p>
+      <p>การเข้าร่วมในช่วงนี้จึงเป็นการทดลองระบบเบื้องต้นเท่านั้น ไม่ใช่การเข้าร่วมการวิจัยที่ได้รับการรับรองแล้ว</p>
+      <h3>4. วัตถุประสงค์ของการทดลองระบบ</h3>
+      <ol>
+        <li>ทดสอบการทำงานของเว็บไซต์และระบบบันทึกเสียง</li>
+        <li>ตรวจสอบว่าคำถามและคำสั่งในการทำแบบทดสอบมีความชัดเจนและเข้าใจง่ายหรือไม่</li>
+        <li>ตรวจสอบคุณภาพเสียงที่ระบบบันทึกได้</li>
+        <li>นำข้อเสนอแนะไปปรับปรุงระบบก่อนดำเนินการวิจัยจริง</li>
+      </ol>
+      <h3>5. คุณสมบัติของผู้เข้าร่วม</h3>
+      <ul>
+        <li>มีอายุ 18 ปีบริบูรณ์ขึ้นไป</li>
+        <li>สามารถอ่านและทำความเข้าใจคำชี้แจงได้</li>
+        <li>สามารถตัดสินใจให้ความยินยอมเข้าร่วมได้ด้วยตนเอง</li>
+      </ul>
+      <p>สำหรับผู้ให้ข้อมูลในแบบสอบถาม ควรเป็นบุคคลใกล้ชิดหรือผู้ที่รู้จักผู้เข้าร่วมเป็นอย่างดีและสามารถประเมินความเปลี่ยนแปลงของความสามารถในชีวิตประจำวันได้</p>
+      <h3>6. ขั้นตอนการเข้าร่วม</h3>
+      <p>ผู้เข้าร่วมจะใช้เวลาประมาณ <b>15 นาที</b> โดยมีขั้นตอนดังนี้</p>
+      <ol>
+        <li><b>กรอกข้อมูลพื้นฐาน</b> เช่น อายุ เพศ และระดับการศึกษา</li>
+        <li><b>ตอบแบบสอบถามเกี่ยวกับความเปลี่ยนแปลงของความสามารถด้านความจำและการใช้ชีวิต</b> จำนวน 16 ข้อ โดยเปรียบเทียบความสามารถในปัจจุบันกับเมื่อประมาณ 10 ปีก่อน แบบสอบถามนี้ควรให้บุคคลใกล้ชิดที่รู้จักผู้เข้าร่วมเป็นอย่างดีเป็นผู้ตอบ ตามรูปแบบของเครื่องมือที่เลือกใช้</li>
+        <li><b>ทำแบบทดสอบการพูด 3 รายการ</b> รายการละประมาณ 1 นาที ได้แก่
+          <ul>
+            <li>การพูดคำที่ขึ้นต้นด้วยเสียงพยัญชนะที่กำหนด (Phonemic Fluency Test: PFT) โดยใช้เสียง “ก”</li>
+            <li>การบรรยายภาพ Cookie Theft (Cookie Theft Picture Description)</li>
+            <li>การพูดชื่อสัตว์ให้ได้มากที่สุดภายในเวลาที่กำหนด (Semantic Fluency Test: SFT)</li>
+          </ul>
+        </li>
+        <li>ระบบจะบันทึกเสียงพูดตามโจทย์เพื่อใช้ตรวจสอบการทำงานและคุณภาพของระบบ</li>
+      </ol>
+      <h3>7. ความเสี่ยงและประโยชน์ที่อาจได้รับ</h3>
+      <p>การเข้าร่วมไม่มีการเก็บตัวอย่างทางชีวภาพหรือทำหัตถการใด ๆ อย่างไรก็ตาม ผู้เข้าร่วมอาจรู้สึกเหนื่อย อึดอัด หรือกังวลเล็กน้อยเมื่อต้องตอบคำถามหรือพูดตามโจทย์</p>
+      <p>ผู้เข้าร่วมสามารถขอพัก หยุดทำแบบทดสอบ หรือถอนตัวได้ทุกเมื่อ โดยไม่มีผลเสียใด ๆ</p>
+      <p>การทดลองนี้ไม่มีผลประโยชน์ทางการแพทย์โดยตรง และระบบ<b>ไม่สามารถใช้วินิจฉัยโรคหรือให้ผลประเมินภาวะสมองเสื่อมแก่ผู้เข้าร่วมได้</b> หากมีความกังวลเกี่ยวกับความจำหรือการเปลี่ยนแปลงด้านความคิด ควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์</p>
+      <h3>8. การใช้และการเก็บรักษาข้อมูล</h3>
+      <ul>
+        <li>ข้อมูลพื้นฐาน คำตอบจากแบบสอบถาม และไฟล์เสียงที่ได้รับจากการทดลองในช่วงนี้ จะใช้เพื่อทดสอบการทำงานและปรับปรุงระบบตามวัตถุประสงค์ที่แจ้งไว้เท่านั้น</li>
+        <li>ข้อมูลจากช่วงทดลองระบบจะไม่นำไปใช้เป็นข้อมูลสำหรับการวิเคราะห์ผลการวิจัยหรือเผยแพร่เป็นผลการวิจัย</li>
+        <li>หากโครงการได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์แล้ว และผู้จัดทำประสงค์จะนำข้อมูลจากช่วงทดลองนี้ไปใช้ในการวิจัย จะดำเนินการขอความยินยอมจากเจ้าของข้อมูลใหม่ก่อน หากไม่ได้รับความยินยอม จะไม่นำข้อมูลดังกล่าวไปใช้</li>
+        <li>ข้อมูลจะใช้รหัสผู้เข้าร่วมแทนชื่อและนามสกุล โดยแยกข้อมูลที่ใช้ระบุตัวบุคคลออกจากข้อมูลสำหรับการทดลองเท่าที่สามารถทำได้</li>
+        <li>ไฟล์เสียงถือเป็นข้อมูลที่อาจทำให้ระบุตัวบุคคลได้ จึงจะจำกัดสิทธิ์การเข้าถึงไว้เฉพาะผู้จัดทำและผู้ที่ได้รับอนุญาตเท่านั้น</li>
+        <li>ข้อมูลจะจัดเก็บในพื้นที่จัดเก็บออนไลน์ที่มีการจำกัดสิทธิ์การเข้าถึงและมีมาตรการรักษาความปลอดภัย</li>
+        <li>กำหนดระยะเวลาการเก็บรักษาข้อมูลเป็น <span id="cRetention"></span> หลังจากนั้นจะดำเนินการลบข้อมูลตามขั้นตอนที่กำหนด หรือเมื่อมีการร้องขอให้ลบข้อมูลตามเงื่อนไขที่เกี่ยวข้อง</li>
+      </ul>
+      <h3>9. สิทธิของผู้เข้าร่วม</h3>
+      <ul>
+        <li>การเข้าร่วมเป็นไปโดยสมัครใจ ไม่มีค่าใช้จ่าย</li>
+        <li>ผู้เข้าร่วมสามารถปฏิเสธการเข้าร่วมหรือถอนตัวได้ทุกเมื่อ โดยไม่ต้องให้เหตุผล</li>
+        <li>ผู้เข้าร่วมสามารถสอบถามรายละเอียดเกี่ยวกับการใช้ข้อมูลของตนเองได้</li>
+        <li>ผู้เข้าร่วมสามารถขอให้ลบข้อมูลของตนเองได้ โดยแจ้งรหัสผู้เข้าร่วมแก่ผู้จัดทำ ทั้งนี้ การดำเนินการจะเป็นไปตามเงื่อนไขและข้อกำหนดด้านการเก็บรักษาข้อมูลที่เกี่ยวข้อง</li>
+        <li>การเก็บ ใช้ และเปิดเผยข้อมูลส่วนบุคคลจะดำเนินการตามกฎหมายคุ้มครองข้อมูลส่วนบุคคลที่เกี่ยวข้อง รวมถึงพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562</li>
+      </ul>
+      <h3>10. ช่องทางติดต่อผู้จัดทำ</h3>
+      <p id="cContact"></p>
+    </div>
+  </div>
+  <h2 style="margin-top:1rem">11. การแสดงความยินยอม</h2>
+  <p class="muted">รหัสผู้เข้าร่วมจะแสดงในหน้าถัดไป วันที่เข้าร่วมระบบบันทึกให้อัตโนมัติ</p>
+  <label class="check"><input type="checkbox" id="consentJoin"><span>ข้าพเจ้าได้อ่านและเข้าใจคำชี้แจงข้างต้นแล้ว รับทราบว่าโครงการอยู่ในช่วงทดลองระบบและยังไม่ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ และยินยอมเข้าร่วมโดยสมัครใจ</span></label>
+  <label class="check"><input type="checkbox" id="consentAudio"><span>ข้าพเจ้ายินยอมให้มีการบันทึกเสียงพูดของข้าพเจ้า และอนุญาตให้ผู้จัดทำใช้ข้อมูลตามวัตถุประสงค์และเงื่อนไขที่ระบุไว้ในเอกสารฉบับนี้</span></label>
+  <p class="muted">กรณีมีผู้ให้ข้อมูลแบบสอบถาม (ญาติหรือคนใกล้ชิด) ผู้ให้ข้อมูลจะทำเครื่องหมายยินยอมของตนเองในหน้าแบบสอบถาม</p>
+  <p class="err" id="consentErr" style="margin-top:.6rem">ต้องทำเครื่องหมายทั้ง 2 ข้อ จึงจะเข้าร่วมได้</p>
+</section>
+
+<!-- PROFILE -->
+<section class="screen" data-step="profile">
+  <h1 id="h-profile">ข้อมูลผู้เข้าร่วม</h1>
+  <div class="code-box"><span>รหัสกลับมาทำต่อ</span><span class="code" id="codeShow"></span><p class="muted">จดรหัสนี้ไว้ หรือถ่ายภาพหน้าจอ ใช้เมื่อต้องการกลับมาบันทึกเสียงข้อที่เหลือ หรือติดต่อผู้วิจัย (รหัสผู้เข้าร่วม <span id="sidShow"></span>)</p></div>
+  <div class="panel">
+    <div class="panel-h"><h2>ข้อมูลทั่วไป</h2><span class="muted"><span class="req">*</span> จำเป็นต้องกรอก</span></div>
+    <div class="panel-b">
+    <div class="grid">
+      <div class="field" id="f-age"><label for="age">อายุ (ปี) <span class="req">*</span></label><input id="age" type="number" inputmode="numeric" min="18" max="110"><span class="err">กรอกอายุเป็นจำนวนเต็ม ระหว่าง 18–110 ปี</span></div>
+      <div class="field" id="f-gender"><span class="lab" id="lg">เพศ <span class="req">*</span></span>
+        <div class="seg" role="radiogroup" aria-labelledby="lg">
+          <label><input type="radio" name="gender" value="หญิง"><span>หญิง</span></label>
+          <label><input type="radio" name="gender" value="ชาย"><span>ชาย</span></label>
+          <label><input type="radio" name="gender" value="ไม่ระบุ"><span>ไม่ระบุ</span></label>
+        </div><span class="err">เลือกเพศ</span></div>
+      <div class="field" id="f-education"><label for="education">ระดับการศึกษาสูงสุด <span class="req">*</span></label>
+        <select id="education"><option value="">เลือก</option><option>ไม่ได้เรียนหนังสือ</option><option>ต่ำกว่าระดับประถมศึกษา</option><option>ประถมศึกษา</option><option>มัธยมศึกษา</option><option>อาชีวศึกษา / อนุปริญญา</option><option>ปริญญาตรีขึ้นไป</option></select><span class="err">เลือกระดับการศึกษา</span></div>
+      <div class="field" id="f-years"><label for="eduYears">จำนวนปีที่เรียน <span class="opt">(ถ้าทราบ)</span></label><input id="eduYears" type="number" inputmode="numeric" min="0" max="30"></div>
+      <div class="field" id="f-accent"><label for="accent">ภูมิภาคที่อาศัยอยู่นานที่สุด <span class="req">*</span></label>
+        <select id="accent"><option value="">เลือก</option><option>กลาง</option><option>อีสาน</option><option>เหนือ</option><option>ใต้</option><option>ตะวันออก</option><option>ตะวันตก</option></select><span class="err">เลือกภูมิภาค</span></div>
+      <div class="field" id="f-lang"><label for="firstLang">ภาษาที่ใช้พูดในบ้านเป็นหลัก <span class="req">*</span></label>
+        <select id="firstLang"><option value="">เลือก</option><option>ไทยกลาง</option><option>ไทยถิ่นอีสาน / ลาว</option><option>คำเมือง</option><option>ไทยถิ่นใต้</option><option>เขมร</option><option>มลายู</option><option>จีน</option><option>อื่น ๆ</option></select><span class="err">เลือกภาษา</span></div>
+    </div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h2>การพูดและการได้ยิน</h2></div>
+    <div class="panel-b">
+      <div class="field"><span class="lab">สิ่งที่อาจมีผลต่อการพูดหรือการฟัง <span class="opt">(เลือกได้หลายข้อ)</span></span>
+        <div class="seg" id="speechFactors">
+          <label><input type="checkbox" value="ได้ยินไม่ชัด"><span>ได้ยินไม่ชัด</span></label>
+          <label><input type="checkbox" value="ใส่เครื่องช่วยฟัง"><span>ใส่เครื่องช่วยฟัง</span></label>
+          <label><input type="checkbox" value="มองเห็นไม่ชัด"><span>มองเห็นไม่ชัด</span></label>
+          <label><input type="checkbox" value="ใส่ฟันปลอม"><span>ใส่ฟันปลอม</span></label>
+          <label><input type="checkbox" value="ไม่มี"><span>ไม่มี</span></label>
+        </div></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h2>ผู้กรอกข้อมูล</h2></div>
+    <div class="panel-b"><div class="grid">
+      <div class="field full" id="f-helper"><span class="lab" id="lh">ผู้กรอกแบบฟอร์มนี้ <span class="req">*</span></span>
+        <div class="seg" role="radiogroup" aria-labelledby="lh">
+          <label><input type="radio" name="helper" value="ผู้เข้าร่วมเอง"><span>ผู้เข้าร่วมเอง</span></label>
+          <label><input type="radio" name="helper" value="ญาติ / ผู้ดูแล"><span>ญาติ / ผู้ดูแล</span></label>
+          <label><input type="radio" name="helper" value="เจ้าหน้าที่"><span>เจ้าหน้าที่</span></label>
+        </div><span class="err">เลือกผู้กรอก</span></div>
+      <div class="field full" id="f-caregiver" hidden><label for="caregiver">ชื่อและเบอร์โทรผู้ติดต่อ <span class="opt">(ไม่บังคับ เก็บแยกจากข้อมูลวิจัย)</span></label><input id="caregiver" type="text" autocomplete="off"></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- SURVEY -->
+<section class="screen" data-step="survey">
+  <h1 id="h-survey">แบบสอบถามความเปลี่ยนแปลงของความจำ</h1>
+  <!-- ขั้นที่ 1: เลือกผู้ให้ข้อมูล -->
+  <div id="iqSetup">
+    <div class="notice"><p>แบบสอบถามนี้ควรตอบโดย<b>คนที่รู้จักผู้เข้าร่วมทดสอบดีมาอย่างน้อย 10 ปี</b> เช่น ลูก คู่สมรส ญาติ เพื่อนบ้าน หรือผู้ดูแล เพราะคนใกล้ชิดมักสังเกตความเปลี่ยนแปลงได้ชัดกว่าตัวผู้เข้าร่วมทดสอบเอง</p></div>
+    <div class="panel"><div class="panel-h"><h2>ใครจะเป็นผู้ตอบแบบสอบถามนี้</h2></div><div class="panel-b">
+      <div class="field" id="f-iqtype"><div class="seg" role="radiogroup" aria-label="ผู้ตอบแบบสอบถาม">
+        <label><input type="radio" name="iqtype" value="ญาติ"><span>ญาติ</span></label>
+        <label><input type="radio" name="iqtype" value="เพื่อนหรือเพื่อนบ้าน"><span>เพื่อนหรือเพื่อนบ้าน</span></label>
+        <label><input type="radio" name="iqtype" value="ผู้ดูแลหรือ อสม."><span>ผู้ดูแลหรือ อสม.</span></label>
+        <label><input type="radio" name="iqtype" value="later"><span>ผู้ให้ข้อมูลจะตอบภายหลัง</span></label>
+      </div><span class="err">เลือกผู้ตอบแบบสอบถาม</span></div>
+      <div id="iqInf" hidden>
+        <div class="grid" style="margin-top:1rem">
+          <div class="field"><label for="iqRel">เกี่ยวข้องเป็นอะไรกับผู้เข้าร่วมทดสอบ <span class="opt">(เช่น ลูกสาว, หลาน, เพื่อนบ้าน)</span></label><input id="iqRel" type="text" autocomplete="off" maxlength="60"></div>
+          <div class="field" id="f-iqContact"><label for="iqContact">เจอผู้เข้าร่วมทดสอบบ่อยแค่ไหน <span class="req">*</span></label>
+            <select id="iqContact"><option value="">เลือก</option><option>อยู่บ้านเดียวกัน</option><option>เจอเกือบทุกวัน</option><option>เจอทุกสัปดาห์</option><option>เจอทุกเดือน</option><option>นาน ๆ ครั้ง</option></select><span class="err">เลือกความถี่</span></div>
+          <div class="field" id="f-iqKnown"><label for="iqKnown">รู้จักผู้เข้าร่วมทดสอบมานานเท่าไร <span class="req">*</span></label>
+            <select id="iqKnown"><option value="">เลือก</option><option value="10+">10 ปีขึ้นไป</option><option value="<10">น้อยกว่า 10 ปี</option></select><span class="err">เลือกระยะเวลา</span></div>
+        </div>
+        <label class="check" id="f-iqConsent"><input type="checkbox" id="iqConsent"><span>(ผู้ให้ข้อมูลแบบสอบถาม) ข้าพเจ้าได้อ่านคำชี้แจงแล้ว และยินยอมให้ข้อมูลเกี่ยวกับความเปลี่ยนแปลงของความสามารถของผู้เข้าร่วมตามคำถามที่กำหนด</span></label>
+        <p class="muted" id="iqKnownNote" hidden style="margin-top:.6rem">แบบสอบถามให้เปรียบเทียบกับ 10 ปีก่อน ถ้ารู้จักกันไม่ถึง 10 ปี ให้เทียบกับช่วงแรกที่รู้จัก และตอบ "ไม่แน่ใจ" ในข้อที่ไม่แน่ใจ</p>
+      </div>
+      <p class="muted" id="iqLaterNote" hidden style="margin-top:.8rem">ข้ามแบบสอบถามนี้ไปก่อนได้ ผู้ให้ข้อมูลกลับมาตอบภายหลังได้ด้วยรหัสกลับมาทำต่อ <b id="iqLaterCode"></b> จากเครื่องของตัวเอง</p>
+      <div style="margin-top:1rem"><button class="btn btn-main btn-sm" id="iqStart">เริ่มตอบแบบสอบถาม</button></div>
+    </div></div>
+  </div>
+  <!-- ขั้นที่ 2: 16 ข้อ -->
+  <div id="iqForm" hidden>
+    <details class="panel iq-instr" id="iqInstr" open><summary class="panel-h"><h2>คำชี้แจง <span class="muted" style="font-weight:400">(แตะเพื่อเปิด/ปิด)</span></h2><span class="muted" id="iqWho"></span></summary><div class="panel-b" id="iqInstrText"></div></details>
+    <div class="panel"><div class="panel-b">
+      <div class="q-meta"><span class="q-pos" id="qPos"></span><button class="btn2" data-say="question"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>อ่านออกเสียง</button></div>
+      <div class="q-bar"><i id="qBar"></i></div>
+      <p class="q-stem" id="qStem"></p>
+      <p class="q-text" id="qText" aria-live="polite"></p>
+      <div class="answers iq" id="qAnswers" role="radiogroup" aria-labelledby="qText"></div>
+      <button class="ans ans-na" id="qNA" role="radio" aria-checked="false"><span class="box"></span>ไม่แน่ใจ</button>
+      <div class="q-nav"><button class="linkbtn" id="qPrev">ข้อก่อนหน้า</button><button class="linkbtn" id="qNext">ข้อถัดไป</button></div>
+    </div></div>
+    <p class="muted" style="font-size:.7rem">แบบสอบถาม IQCODE ฉบับสั้น ภาษาไทย (Informant Questionnaire on Cognitive Decline in the Elderly; A.F. Jorm, The Australian National University) · <button class="linkbtn" id="iqChange" style="font-size:.7rem">เปลี่ยนผู้ตอบ</button></p>
+  </div>
+</section>
+
+<!-- MIC -->
+<section class="screen" data-step="mic">
+  <h1 id="h-mic">ทดสอบไมโครโฟน</h1>
+  <div class="notice"><p>กดปุ่ม "เริ่มทดสอบ" แล้วนับเลข 1 ถึง 10 ด้วยเสียงปกติ ระบบจะฟัง 6 วินาที</p></div>
+  <div class="panel"><div class="panel-b">
+    <p class="muted">หากมีข้อความขอสิทธิ์ใช้ไมโครโฟน ให้กด "อนุญาต" วางโทรศัพท์หรือไมโครโฟนห่างจากปากประมาณหนึ่งคืบ</p>
+    <div class="meter" aria-hidden="true"><i id="micMeter"></i></div>
+    <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-main" id="btnMic">เริ่มทดสอบ</button>
+      <span id="micState" class="muted" aria-live="polite"></span>
+    </div>
+    <div id="micResult"></div>
+  </div></div>
+</section>
+
+<section class="screen" data-step="PFT"></section>
+<section class="screen" data-step="CTD"></section>
+<section class="screen" data-step="SFT"></section>
+
+<!-- DONE -->
+<section class="screen" data-step="done">
+  <div class="receipt">
+    <h1 id="h-done">บันทึกการทดสอบเรียบร้อย</h1>
+    <div id="doneMissing" hidden><p>ยังไม่ได้บันทึกเสียง:</p><ul class="missing" id="missingList"></ul></div>
+    <dl class="dl">
+      <dt>รหัสผู้เข้าร่วม</dt><dd class="sid" id="sidDone"></dd>
+      <dt>วันที่ทำแบบทดสอบ</dt><dd id="doneTime"></dd>
+    </dl>
+  </div>
+  <div class="code-box" id="doneCode" hidden><span>รหัสกลับมาทำต่อ</span><span class="code" id="codeDone"></span><p class="muted">จดรหัสนี้ไว้ แล้วเปิดเว็บนี้อีกครั้งเพื่อบันทึกข้อที่เหลือ บนเครื่องนี้ระบบจะจำไว้ให้ ส่วนเครื่องอื่นให้ใส่รหัสนี้ที่หน้าแรก</p><button class="btn btn-main btn-sm" id="btnDoRest">บันทึกข้อที่เหลือตอนนี้</button></div>
+  <div class="notice"><p>ขอบคุณที่สละเวลาช่วยทดลองระบบ ระบบนี้อยู่ในช่วงทดลองและไม่สามารถวินิจฉัยโรคได้ จึงไม่แสดงผลการประเมิน หากกังวลเรื่องความจำ ควรปรึกษาแพทย์หรือเจ้าหน้าที่สาธารณสุขใกล้บ้าน</p></div>
+  <div class="panel">
+    <div class="panel-h"><h2>สถานะการส่งข้อมูล</h2><button class="btn2" id="btnRetryAll">ส่งอีกครั้ง</button></div>
+    <div class="panel-b">
+      <p class="muted" id="uplSummary" aria-live="polite"></p>
+      <ul class="upl" id="uplList"></ul>
+    </div>
+  </div>
+  <button class="btn btn-back" id="btnNextPerson">เริ่มผู้เข้าร่วมคนใหม่</button>
+</section>
+</main>
+</div>
+
+<div class="bar"><div class="bar-in">
+  <button class="btn btn-back" id="btnBack">ย้อนกลับ</button>
+  <div class="net" id="netState" aria-live="polite"></div>
+  <button class="btn btn-main" id="btnNext">เริ่มทำแบบทดสอบ</button>
+</div></div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<dialog id="dlgDel" aria-labelledby="delH">
+  <div class="dlg-h"><h2 id="delH">ลบไฟล์เสียง</h2></div>
+  <div class="dlg-b">
+    <p>ต้องการลบเสียงที่บันทึกไว้ของ <b id="delTask"></b> หรือไม่</p>
+    <p class="muted">เมื่อลบแล้วจะฟังหรือนำกลับมาไม่ได้ ต้องบันทึกใหม่ให้ครบ 1 นาที</p>
+    <div style="display:flex;gap:.6rem;margin-top:1rem;justify-content:flex-end;flex-wrap:wrap">
+      <button class="btn btn-back btn-sm" id="delNo">ไม่ลบ</button>
+      <button class="btn btn-sm" id="delYes" style="background:var(--err);color:#fff">ลบไฟล์นี้</button>
+    </div>
+  </div>
+</dialog>
+<dialog id="dlgPin" aria-labelledby="pinH">
+  <div class="dlg-h"><h2 id="pinH">สำหรับเจ้าหน้าที่</h2></div>
+  <form class="dlg-b" method="dialog" id="pinForm">
+    <div class="field"><label for="pin">รหัสเจ้าหน้าที่</label><input id="pin" type="password" autocomplete="off"><span class="err">รหัสไม่ถูกต้อง</span></div>
+    <div style="display:flex;gap:.6rem;margin-top:1rem;justify-content:flex-end">
+      <button class="btn btn-back btn-sm" type="button" id="pinCancel">ยกเลิก</button>
+      <button class="btn btn-main btn-sm" id="pinOk" value="ok">เข้าสู่ส่วนเจ้าหน้าที่</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlgStaff" aria-labelledby="stH">
+  <div class="dlg-h"><h2 id="stH">ส่วนเจ้าหน้าที่</h2><button id="stClose">ปิด</button></div>
+  <div class="dlg-b">
+    <h3>รอบการเก็บข้อมูล</h3>
+    <dl class="kv" id="stInfo"></dl>
+    <div class="grid" style="margin-top:.9rem">
+      <div class="field"><label for="stSid">รหัสผู้เข้าร่วม</label><input id="stSid" type="text" autocomplete="off"></div>
+      <div class="field"><label for="stStaffId">รหัสเจ้าหน้าที่ผู้เก็บข้อมูล</label><input id="stStaffId" type="text" autocomplete="off"></div>
+      <div class="field"><label for="stSite">สถานที่เก็บข้อมูล</label><input id="stSite" type="text" autocomplete="off"></div>
+      <div class="field"><label for="stEnv">สภาพแวดล้อมขณะบันทึก</label><select id="stEnv"><option value="">เลือก</option><option>ห้องเงียบ</option><option>มีเสียงรบกวนเล็กน้อย</option><option>มีเสียงรบกวนมาก</option></select></div>
+    </div>
+    <h3>ผลประเมินทางคลินิก <span class="opt">(กรอกเมื่อมีผลจากผู้ประเมิน)</span></h3>
+    <div class="grid">
+      <div class="field"><label for="stTMSE">คะแนน TMSE (0–30)</label><input id="stTMSE" type="number" min="0" max="30"><span class="err">ต้องเป็นจำนวนเต็ม 0–30</span></div>
+      <div class="field"><label for="stMoCA">คะแนน MoCA (0–30)</label><input id="stMoCA" type="number" min="0" max="30"><span class="err">ต้องเป็นจำนวนเต็ม 0–30</span></div>
+      <div class="field"><label for="stMocaCert">ผู้ทดสอบ MoCA ผ่านการอบรมรับรองแล้ว</label><select id="stMocaCert"><option value="">ไม่ระบุ</option><option value="yes">ผ่านแล้ว</option><option value="no">ยังไม่ผ่าน</option></select></div>
+      <div class="field"><label for="stMmseEdu">MMSE-Thai 2002: กลุ่มการศึกษา</label><select id="stMmseEdu"><option value="">เลือก</option><option value="none">ไม่ได้เรียนหนังสือ (เต็ม 23)</option><option value="primary">ประถมศึกษา (เต็ม 30)</option><option value="above">สูงกว่าประถมศึกษา (เต็ม 30)</option></select></div>
+      <div class="field"><label for="stMMSE">คะแนน MMSE-Thai 2002</label><input id="stMMSE" type="number" min="0" max="30"><span class="err">คะแนนเกินคะแนนเต็มของกลุ่มการศึกษา</span></div>
+      <div class="field"><label for="stMmseOri">คะแนนย่อย: การรับรู้เวลาและสถานที่ (0–10)</label><input id="stMmseOri" type="number" min="0" max="10"><span class="err">ต้องเป็นจำนวนเต็ม 0–10</span></div>
+      <div class="field"><label for="stMmseRec">คะแนนย่อย: การระลึกคำ (0–3)</label><input id="stMmseRec" type="number" min="0" max="3"><span class="err">ต้องเป็นจำนวนเต็ม 0–3</span></div>
+      <div class="field full"><p class="muted" id="stMmseInterp" style="margin:0"></p></div>
+      <div class="field"><label for="stGroup">กลุ่มทางคลินิก</label><select id="stGroup"><option value="">ยังไม่ทราบ</option><option value="HC">ปกติ (HC)</option><option value="MCI">MCI</option><option value="Dementia">Dementia</option></select></div>
+      <div class="field"><label for="stDxSrc">ที่มาของกลุ่มทางคลินิก</label><select id="stDxSrc"><option value="">เลือก</option><option>แพทย์วินิจฉัย</option><option>จากคะแนนแบบทดสอบมาตรฐาน</option><option>ผู้เข้าร่วมแจ้งเอง</option></select></div>
+      <div class="field"><label for="stDxDate">วันที่ประเมิน</label><input id="stDxDate" type="text" placeholder="วว/ดด/ปปปป"></div>
+      <div class="field full"><label for="stNotes">บันทึกเจ้าหน้าที่</label><textarea id="stNotes" rows="3"></textarea></div>
+    </div>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem">
+      <button class="btn btn-main btn-sm" id="stSave">บันทึกข้อมูลเจ้าหน้าที่</button>
+      <button class="btn btn-back btn-sm" id="stSkip">ข้ามไปขั้นตอนถัดไป</button>
+    </div>
+    <h3>ไฟล์เสียงในรอบนี้</h3>
+    <table class="att"><thead><tr><th>งาน</th><th>ครั้งที่</th><th>คุณภาพ</th><th>พูด (วินาที)</th><th>การส่ง</th></tr></thead><tbody id="stAtt"></tbody></table>
+    <h3>เริ่มรอบใหม่</h3>
+    <p class="muted" style="font-size:.75rem">ใช้เมื่อผู้เข้าร่วมคนนี้เสร็จแล้ว ข้อมูลที่ยังส่งไม่ครบจะถูกเก็บไว้และส่งต่อให้อัตโนมัติ</p>
+    <button class="btn btn-back btn-sm" id="stNew">เริ่มผู้เข้าร่วมคนใหม่</button>
+  </div>
+</dialog>
+
+<script>
+/* ================== ตั้งค่าโครงการ (แก้ที่นี่ที่เดียว) ================== */
+const CONFIG={
+  projectTitle:"การคัดกรองภาวะสมองเสื่อมในผู้สูงอายุด้วยปัญญาประดิษฐ์จากการวิเคราะห์ข้อมูลเสียงพูดและคุณลักษณะทางภาษา",
+  studyPhase:"pilot",                // ช่วงทดลองระบบ (ยังไม่ได้รับการรับรองจริยธรรม) — เปลี่ยนเป็น "study" เมื่อได้รับการรับรองแล้ว
+  organization:"ช่วงทดลองระบบ ผู้จัดทำ บุญฐิตา พรรณกุล (CEDT จุฬาลงกรณ์มหาวิทยาลัย)",
+  author:"บุญฐิตา พรรณกุล",
+  authorStatus:"นักศึกษาชั้นปีที่ 1 สาขาวิศวกรรมคอมพิวเตอร์และเทคโนโลยีดิจิทัล (CEDT) คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย",
+  phone:"0642439914",
+  email:"meawmeawbp@gmail.com",
+  retention:"1 ปี นับจากวันที่เก็บข้อมูล",
+  logo:"",                        // ใส่ path โลโก้หน่วยงาน เช่น "logo.png" (เว้นว่าง = ไม่แสดง)
+  ctdImage:"ctd.jpg",             // วางไฟล์ภาพบรรยายภาพที่มีสิทธิ์ใช้ ไว้ในโฟลเดอร์เดียวกัน
+  ctdFallback:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/13E17/production/_114913418_cookietheft.jpg.webp",
+  recordSec:60,
+  webapp:"https://script.google.com/macros/s/AKfycbxqWMhN5D7CKz17t3IwzR7N5D_lmYlla5IM6hxuj-GDJKpuIkb4dJMkt86nWYLNBUbOMg/exec"
+};
+const APP_VERSION="v3.2-pilot-2026-11-11";
+const QC_VERSION="qc-js-1.0";
+
+/* ================== ข้อมูลแบบสอบถาม / งานพูด ================== */
+/* IQCODE ฉบับสั้น ภาษาไทย (A.F. Jorm, ANU) — ข้อความตามต้นฉบับ แก้เฉพาะคำสะกด "IOCODE" ในหัวกระดาษ */
+const IQ_VERSION="IQCODE-16 Thai short form (ANU); wording v3: unified answers ดีกว่าเดิม/เหมือนเดิม/แย่ลง + examples, ผู้สูงอายุ→ผู้เข้าร่วมทดสอบ";
+const IQ_SELF_VERSION="IQCODE-16 Thai, self-report adaptation v3 (unified answers; not validated)";
+/* ชุดคำตอบเดียวกันทั้งผู้ให้ข้อมูลและผู้ตอบเอง (คะแนน 1–5 ทิศทางเดียวกับต้นฉบับ) */
+const IQ_CHOICES=[{score:1,text:"ดีกว่าเดิมมาก"},{score:2,text:"ดีกว่าเดิมบ้าง"},{score:3,text:"เหมือนเดิม"},
+  {score:4,text:"แย่ลงเล็กน้อย",hint:"เช่น ลืมบ่อยขึ้นบ้าง หรือใช้เวลานานขึ้น"},{score:5,text:"แย่ลงมาก",hint:"เช่น ลืมเป็นประจำ หรือต้องมีคนช่วย"}];
+const iqChoices=()=>IQ_CHOICES;
+const IQ_ITEMS=[
+ "ความจำเกี่ยวกับเพื่อนฝูงและครอบครัวเช่น อาชีพ, วันเกิด, บ้านที่อยู่อาศัย",
+ "ความจำเกี่ยวกับสิ่งที่เพิ่งเกิดขึ้นเมื่อเร็วๆ นี้",
+ "ความสามารถในการจำคำสนทนาที่พูดกันเมื่อ 2-3 วันก่อน",
+ "ความจำเลขที่บ้าน หรือเบอร์โทรศัพท์",
+ "ความจำเรื่องวัน เดือน ปี ปัจจุบัน",
+ "ความจำเกี่ยวกับที่เก็บของต่างๆ ในบ้าน หรือที่ทำงาน",
+ "ความจำว่าได้วางของไว้ที่ใดเมื่อมีการเปลี่ยนที่ไปจากที่เก่า",
+ "ความสามารถในการใช้อุปกรณ์เครื่องใช้ต่างๆ ในบ้าน เช่น เปิดทีวี, เสียบปลั๊กไฟ",
+ "ความสามารถในการใช้อุปกรณ์ใหม่ๆ หรือใช้วัสดุใหม่ๆ ที่นำเข้าใช้ในบ้าน",
+ "ความสามารถในการเรียนรู้สิ่งใหม่ๆ",
+ "ความสามารถในการติดตามเรื่องราวเนื้อหาใน หนังสือพิมพ์ หรือโทรทัศน์ได้รู้เรื่อง",
+ "ความสามารถในการตัดสินใจต่างๆ ในชีวิตประจำวัน",
+ "การจับจ่ายใช้เงินในการซื้อของในชีวิตประจำวัน",
+ "การวางแผนการใช้จ่ายเงิน เช่น ใช้เงินเดือน หรือเงินในเดือนหนึ่งๆ การจ่ายค่าน้ำ/ไฟ/โทรศัพท์",
+ "การวางแผนด้านการคิดคำนวณ ตลอดจนการคาดการณ์ต่างๆ เช่น รู้ว่าควรซื้ออาหารมาก หรือน้อยเพียงใด รู้ว่าลูกหลาน หรือญาติไปมาหาสู่กันบ่อยเพียงใด หรือห่างเหินนานแล้วเพียงใด",
+ "ความสามารถในการเข้าใจเหตุการณ์สิ่งต่างๆ ที่เกิดขึ้นรอบตัว หรืออธิบายให้เหตุผลกับสิ่งต่างๆ หรือเหตุการณ์ต่างๆ ที่เกิดขึ้นรอบตัวได้"];
+const IQ_INSTR_INFORMANT=`<p>ขอให้ท่านนึกถึงสภาพของผู้เข้าร่วมทดสอบเมื่อ 10 ปีก่อน เทียบกับปัจจุบัน</p>
+<p>คำถามต่อไปนี้ จะถามเกี่ยวกับการใช้ความจำและสติปัญญาการทำงานของผู้เข้าร่วมทดสอบใน 10 ปี ก่อนเทียบกับปัจจุบันว่าท่าน สามารถใช้ความจำได้ - ดีกว่าเดิม - เหมือนเดิม หรือ - แย่ลง</p>
+<p>ทั้งนี้ถ้าผู้เข้าร่วมทดสอบชอบลืมวางของทิ้งบ่อยๆ มาตั้งแต่หนุ่มสาวแล้ว และก็ยังลืมวางของทิ้งไว้บ่อยๆ จนถึงปัจจุบันโดยที่ไม่ได้เปลี่ยนแปลงไปในทางที่แย่ลงก็ให้ถือว่า “เหมือนเดิม”</p>
+<p>ให้สังเกตดูอาการต่างๆ เหล่านี้ในปัจจุบันโดยเปรียบเทียบกับเมื่อ 10 ปีก่อน ถ้าข้อไหนไม่แน่ใจ ให้เลือก “ไม่แน่ใจ”</p>`;
+/* ฉบับตอบเอง: ปรับเฉพาะคำชี้แจงให้เป็นตัวผู้ตอบเอง (ดัดแปลง ยังไม่มีการศึกษารับรอง) */
+const IQ_INSTR_SELF=`<p>ขอให้ท่านนึกถึงตัวท่านเองเมื่อ 10 ปีก่อน แล้วเปรียบเทียบกับตอนนี้</p>
+<p>คำถามต่อไปนี้ถามเรื่องความจำและการคิดในชีวิตประจำวัน ในแต่ละข้อ ให้ตอบว่าตอนนี้ของท่านดีกว่าเดิม เหมือนเดิม หรือแย่ลงกว่าเมื่อ 10 ปีก่อน</p>
+<p>ถ้าท่านเป็นคนขี้ลืมมาตั้งแต่หนุ่มสาว และตอนนี้ก็ยังเป็นเหมือนเดิม ไม่ได้มากขึ้น ให้ตอบว่า “เหมือนเดิม”</p>
+<p>ถ้าข้อไหนไม่แน่ใจ ให้เลือก “ไม่แน่ใจ”</p>
+<p class="muted">ฉบับนี้ปรับคำชี้แจงให้ผู้เข้าร่วมทดสอบตอบเอง (ดัดแปลงจากต้นฉบับ ยังไม่มีการศึกษารับรอง)</p>`;
+const IQ_NA="NA";
+/* คะแนน: ค่าเฉลี่ยของข้อที่ตอบ (1–5, 3 = ไม่เปลี่ยนแปลง); ไม่ทราบ > 3 ข้อ = ข้อมูลไม่พอ */
+function iqScore(st){const a=(st.iq&&st.iq.ans)||{};const v=Object.values(a);const nums=v.filter(x=>x!==IQ_NA).map(Number);
+  return{answered:nums.length,unknown:v.filter(x=>x===IQ_NA).length,done:v.length,mean:nums.length?Math.round(nums.reduce((p,c)=>p+c,0)/nums.length*1000)/1000:null,insufficient:v.filter(x=>x===IQ_NA).length>3};}
+const iqKey=i=>String(i+1);
+const iqDone=st=>st.iq&&(st.iq.mode==="later"||(!!st.iq.mode&&iqScore(st).done===IQ_ITEMS.length));
+const TASKS={
+  PFT:{n:1,title:"พูดคำที่ขึ้นต้นด้วยเสียง ก",
+    say:"ข้อที่หนึ่ง ขอให้พูดคำภาษาไทยที่ขึ้นต้นด้วยเสียง กอ ไก่ ให้ได้มากที่สุดในหนึ่งนาที เช่น ไก่ กิน เก้าอี้ ไม่ต้องใช้ชื่อคน ชื่อสถานที่ และไม่พูดคำเดิมซ้ำ",
+    body:`<p>พูดคำภาษาไทยที่ขึ้นต้นด้วยเสียง <b>ก</b> ให้ได้มากที่สุดภายใน 1 นาที</p><p class="muted">ตัวอย่าง ไก่ กิน เก้าอี้ ไม่ใช้ชื่อคนหรือชื่อสถานที่ และไม่พูดคำเดิมซ้ำ</p>`},
+  CTD:{n:2,title:"เล่าสิ่งที่เห็นในภาพ",
+    say:"ข้อที่สอง ขอให้ดูภาพให้ทั่ว แล้วเล่าทุกอย่างที่เห็นว่ามีใคร กำลังทำอะไร และมีอะไรเกิดขึ้นบ้าง พูดไปเรื่อย ๆ จนครบหนึ่งนาที",
+    body:`<p>ดูภาพให้ทั่ว แล้วเล่าทุกอย่างที่เห็น ว่ามีใคร กำลังทำอะไร และมีอะไรเกิดขึ้นบ้าง</p><p class="muted">พูดต่อเนื่องจนครบ 1 นาที ไม่มีคำตอบถูกหรือผิด</p>`},
+  SFT:{n:3,title:"พูดชื่อสัตว์",
+    say:"ข้อที่สาม ขอให้พูดชื่อสัตว์ทุกชนิดที่นึกออก ให้ได้มากที่สุดในหนึ่งนาที เช่น แมว วัว ช้าง",
+    body:`<p>พูดชื่อสัตว์ทุกชนิดที่นึกออก ให้ได้มากที่สุดภายใน 1 นาที</p><p class="muted">ตัวอย่าง แมว วัว ช้าง</p>`}
+};
+const STEPS=["welcome","consent","profile","survey","mic","PFT","CTD","SFT","done"];
+const RAIL=[["consent","ข้อมูลโครงการและความยินยอม"],["profile","ข้อมูลผู้เข้าร่วม"],["survey","แบบสอบถาม"],["mic","ทดสอบไมโครโฟน"],["PFT","พูดข้อ 1 คำขึ้นต้นด้วย ก"],["CTD","พูดข้อ 2 เล่าภาพ"],["SFT","พูดข้อ 3 ชื่อสัตว์"],["done","เสร็จสิ้น"]];
+
+/* ================== state + บันทึกบนเครื่อง ================== */
+const LS_KEY="sds_v3_state";
+/* ไฟล์ที่ใช้งานอยู่ของข้อนั้น (1 ข้อ = 1 ไฟล์) : ไฟล์ที่อัดในเครื่องนี้ หรือไฟล์ที่ส่งไว้แล้วจากครั้งก่อน */
+function activeOf(st,p){const L=(st.tasks[p]||[]).filter(a=>!a.deleted);const a=L[L.length-1];if(a)return a;const r=st.remote&&st.remote[p];return r?Object.assign({remote:true,upload:"sent"},r):null;}
+function tasksDoneOf(st){return["PFT","CTD","SFT"].filter(p=>{const a=activeOf(st,p);return a&&(a.qc&&a.qc.QC_Status!=="FAIL"||a.override||a.remote);});}
+const $=id=>document.getElementById(id);
+function newSubjectId(){const d=new Date(),p=n=>String(n).padStart(2,'0');return`TH${String(d.getFullYear()).slice(-2)}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${Math.random().toString(36).slice(2,5).toUpperCase()}`;}
+const CODE_ABC="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+function newCode(){const a=new Uint32Array(8);crypto.getRandomValues(a);return[...a].map(x=>CODE_ABC[x%CODE_ABC.length]).join("");}
+const fmtCode=c=>c?c.slice(0,4)+"-"+c.slice(4):"";
+function blankState(){return{sid:newSubjectId(),code:newCode(),remote:{},everSent:false,step:"welcome",startedISO:new Date().toISOString(),consentJoin:false,consentAudio:false,profile:{},iq:{mode:"",type:"",rel:"",contact:"",known:"",consent:"",ans:{}},qIndex:0,mic:null,tasks:{PFT:[],CTD:[],SFT:[]},final:{},staff:{},completedISO:""};}
+let S;
+try{S=JSON.parse(localStorage.getItem(LS_KEY)||"null");}catch(e){S=null;}
+if(S&&!S.code)S=null; // ข้อมูลรุ่นเก่า
+if(S&&S.step==="done"&&tasksDoneOf(S).length===3)S=null; // ทำครบแล้ว: เปิดใหม่ให้เริ่มคนใหม่ (ไฟล์ที่ยังส่งไม่ครบยังอยู่ในคิว)
+const hadSaved=!!(S&&S.step&&S.step!=="welcome");
+const resumeStep=hadSaved?S.step:null;
+if(!S)S=blankState();
+function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
+const prefs=(()=>{try{return JSON.parse(localStorage.getItem("sds_v3_prefs")||"{}");}catch(e){return{};}})();
+function savePrefs(){try{localStorage.setItem("sds_v3_prefs",JSON.stringify(prefs));}catch(e){}}
+
+/* ================== คิวส่งข้อมูล (IndexedDB) — ส่งซ้ำอัตโนมัติเมื่อเน็ตกลับมา ================== */
+const Q={db:null,mem:new Map(),
+  async open(){if(this.db||!window.indexedDB)return this.db;return this.db=await new Promise(res=>{const r=indexedDB.open("sds_v3_queue",1);r.onupgradeneeded=()=>r.result.createObjectStore("jobs",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);});},
+  async put(job){this.mem.set(job.id,job);const db=await this.open();if(!db)return;await new Promise(res=>{const t=db.transaction("jobs","readwrite");t.objectStore("jobs").put(job);t.oncomplete=res;t.onerror=res;});},
+  async del(id){this.mem.delete(id);const db=await this.open();if(!db)return;await new Promise(res=>{const t=db.transaction("jobs","readwrite");t.objectStore("jobs").delete(id);t.oncomplete=res;t.onerror=res;});},
+  async all(){const db=await this.open();if(!db)return[...this.mem.values()];return new Promise(res=>{const t=db.transaction("jobs","readonly");const r=t.objectStore("jobs").getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>res([...this.mem.values()]);});}
+};
+let flushing=false,flushAgain=false,inflight=null;
+const PERMANENT=["forbidden","bad_sid","bad_task","bad_wav","bad_duration","too_large","bad_code","no_consent","bad_request","unknown_type"];
+async function postJSON(obj){
+  const r=await fetch(CONFIG.webapp,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(obj)});
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  const js=await r.json().catch(()=>({}));
+  if(js.ok===false)throw new Error(js.error||"server");
+  return js;
+}
+async function flushQueue(){
+  if(flushing){flushAgain=true;return;}
+  flushing=true;
+  try{
+    const pr=k=>k==="form"?0:1;
+    const jobs=(await Q.all()).sort((a,b)=>pr(a.kind)-pr(b.kind)||a.created-b.created);
+    for(const job of jobs){
+      if(!navigator.onLine)break;
+      if(!(await Q.all()).some(j=>j.id===job.id))continue;   // ถูกลบออกจากคิวระหว่างรอ
+      try{
+        inflight=job.id;
+        const js=await postJSON(job.payload).finally(()=>{inflight=null;});
+        await Q.del(job.id);
+        markJob(job,"sent",js);
+      }catch(e){
+        const msg=String(e.message||e);
+        if(PERMANENT.includes(msg)){await Q.del(job.id);markJob(job,"rejected",{error:msg});}
+        else{job.tries=(job.tries||0)+1;job.lastError=msg;await Q.put(job);markJob(job,"error");}
+      }
+    }
+  }finally{flushing=false;renderNet();if(flushAgain){flushAgain=false;flushQueue();}}
+}
+function markJob(job,status,js){
+  if(status==="sent"&&!S.everSent){S.everSent=true;persist();}
+  if(job.kind==="audio"){
+    for(const p of Object.keys(S.tasks)){const a=S.tasks[p].find(x=>x.jobId===job.id);if(a){a.upload=status;if(js&&js.filename)a.serverName=js.filename;if(js&&js.error)a.uploadError=js.error;if(S.step===p&&!busy)updateTaskResult(p);}}
+    persist();renderUploads();
+  }else if(job.kind==="form"){S.formUpload=status;persist();}
+}
+async function pendingCount(){return(await Q.all()).length;}
+async function renderNet(){
+  const n=await pendingCount();const el=$("netState");
+  if(!navigator.onLine)el.textContent=`ไม่มีอินเทอร์เน็ต ข้อมูลเก็บไว้บนเครื่อง${n?` (${n} รายการ)`:''} จะส่งให้อัตโนมัติ`;
+  else el.textContent=n?`กำลังส่งข้อมูล ${n} รายการ`:"";
+  renderUploads();
+}
+window.addEventListener("online",()=>{renderNet();flushQueue();});
+window.addEventListener("offline",renderNet);
+setInterval(()=>{if(navigator.onLine)flushQueue();},20000);
+
+/* ---------- payload แบบฟอร์ม (เข้ากับ Apps Script เดิม: type:"form") ---------- */
+let formTimer=null;
+function queueForm(){clearTimeout(formTimer);formTimer=setTimeout(enqueueForm,600);}
+async function enqueueForm(){
+  if(!(S.consentJoin&&S.consentAudio))return;
+  const P=S.profile,d={SubjectID:S.sid,Consent:"yes",Consent_Audio:"yes",Age:P.age||"",Gender:P.gender||"",Education:P.education||"",
+    EducationYears:P.eduYears||"",RegionAccent:P.accent||"",FirstLanguage:P.firstLang||"",SpeechFactors:(P.speechFactors||[]).join(", "),
+    FilledBy:P.helper||"",TasksDone:tasksDoneOf(S).join(","),SessionStartISO:S.startedISO,SessionStep:S.step,SessionCompleteISO:S.completedISO||"",
+    UserAgent:navigator.userAgent,AppVersion:APP_VERSION,StudyPhase:CONFIG.studyPhase,ClientTimeISO:new Date().toISOString()};
+  const iq=S.iq||{};
+  if(iq.mode){
+    d.IQCODE_Mode=iq.mode;d.IQCODE_Version=iq.mode==="self"?IQ_SELF_VERSION:IQ_VERSION;
+    if(iq.mode==="informant"){d.Informant_Consent=iq.consent||"";d.Informant_Type=iq.type;d.Informant_Relation=iq.rel;d.Informant_Contact=iq.contact;d.Informant_KnownYears=iq.known;}
+    if(iq.mode==="informant"||iq.mode==="self"){
+      const pre=iq.mode==="informant"?"IQ":"IQS";
+      IQ_ITEMS.forEach((_,i)=>{const v=iq.ans[iqKey(i)];if(v!==undefined)d[pre+String(i+1).padStart(2,"0")]=v;});
+      const sc=iqScore(S);const tag=iq.mode==="informant"?"IQCODE":"IQCODE_Self";
+      d[tag+"_Answered"]=sc.answered;d[tag+"_Unknown"]=sc.unknown;if(sc.mean!==null)d[tag+"_Mean"]=sc.mean;d[tag+"_Insufficient"]=sc.insufficient?"yes":"no";
+    }
+  }
+  if(S.mic){d.MicCheck_Status=S.mic.QC_Status;d.MicCheck_SNR_dB=S.mic.SNR_dB;d.MicCheck_RMS_DBFS=S.mic.RMS_DBFS;}
+  for(const p of ["PFT","CTD","SFT"]){const L=S.tasks[p];if(L.length)d[p+"_Attempts"]=L.length;const f=activeOf(S,p);if(f&&!f.remote){d[p+"_FinalAttempt"]=f.attempt;d[p+"_FinalFile"]=f.serverName||f.filename;d[p+"_FinalQC"]=f.qc.QC_Status;}}
+  const st=S.staff;const map={StaffID:"staffId",Site:"site",RecordingEnv:"env",TMSE:"tmse",MoCA:"moca",MMSE_Thai2002:"mmse",MMSE_EduGroup:"mmseEdu",MMSE_Orientation:"mmseOri",MMSE_Recall:"mmseRec",MMSE_Interpretation:"mmseInterp",MoCA_RaterCertified:"mocaCert",ClinicalGroup:"group",ClinicalGroupSource:"dxSrc",ClinicalAssessDate:"dxDate",StaffNotes:"notes"};
+  for(const k in map)if(st[map[k]])d["Staff_"+k]=st[map[k]];
+  const job={id:"form-"+S.sid,kind:"form",created:Date.now(),payload:{type:"form",code:S.code,staffKey:sessionStorage.getItem("sds_staff_key")||"",data:d,contact:{SubjectID:S.sid,Caregiver:P.caregiver||""}}};
+  await Q.put(job);flushQueue();
+}
+
+/* ================== เสียง: อัด PCM ดิบ / resample / QC (เหมือนหน้าเดิม qc-js-1.0) ================== */
+async function startRawCapture(onLevel){
+  const ctx=new(window.AudioContext||window.webkitAudioContext)();
+  const resumed=ctx.resume().catch(()=>{});
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}
+  catch(e){try{ctx.close();}catch(_){}throw e;}
+  await Promise.race([resumed,new Promise(r=>setTimeout(r,1500))]);
+  if(ctx.state!=="running")throw new Error("เบราว์เซอร์ยังไม่เปิดระบบเสียง โปรดกดปุ่มอีกครั้ง");
+  const src=ctx.createMediaStreamSource(stream);const chunks=[];let node;
+  const push=c=>{chunks.push(c);if(onLevel){let s=0;for(let i=0;i<c.length;i++)s+=c[i]*c[i];onLevel(Math.sqrt(s/c.length));}};
+  if(ctx.audioWorklet&&window.AudioWorkletNode){
+    try{
+      const code="class R extends AudioWorkletProcessor{process(i){const c=i[0]&&i[0][0];if(c)this.port.postMessage(c.slice(0));return true;}}registerProcessor('raw-rec',R);";
+      await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([code],{type:"application/javascript"})));
+      node=new AudioWorkletNode(ctx,"raw-rec");node.port.onmessage=e=>push(e.data);
+    }catch(e){node=null;}
+  }
+  if(!node){node=ctx.createScriptProcessor(4096,1,1);node.onaudioprocess=e=>push(new Float32Array(e.inputBuffer.getChannelData(0)));}
+  const mute=ctx.createGain();mute.gain.value=0;src.connect(node);node.connect(mute);mute.connect(ctx.destination);
+  const tr=stream.getAudioTracks()[0];const settings=(tr&&tr.getSettings)?tr.getSettings():{};
+  return{track:tr,stop:async()=>{
+    await new Promise(r=>setTimeout(r,120));
+    try{src.disconnect();node.disconnect();}catch(e){}
+    stream.getTracks().forEach(t=>t.stop());const sr=ctx.sampleRate;try{await ctx.close();}catch(e){}
+    let n=0;chunks.forEach(c=>n+=c.length);const out=new Float32Array(n);let o=0;chunks.forEach(c=>{out.set(c,o);o+=c.length;});
+    return{samples:out,sampleRate:sr,settings};
+  },cancel:()=>{try{src.disconnect();node.disconnect();}catch(e){}stream.getTracks().forEach(t=>t.stop());try{ctx.close();}catch(e){}}};
+}
+async function resampleTo16k(x,sr){
+  if(sr===16000)return x;
+  const off=new(window.OfflineAudioContext||window.webkitOfflineAudioContext)(1,Math.ceil(x.length*16000/sr),16000);
+  const buf=off.createBuffer(1,x.length,sr);buf.copyToChannel(x,0);const s=off.createBufferSource();s.buffer=buf;s.connect(off.destination);s.start();
+  return(await off.startRendering()).getChannelData(0);
+}
+function analyzeAudio(y,sr,expectSec=60){
+  const r3=v=>Math.round(v*1000)/1000,db=v=>20*Math.log10(Math.max(v,1e-10));
+  const N=y.length,dur=N/sr;let peak=0,sum=0,sq=0,clip=0;
+  for(let i=0;i<N;i++){const v=y[i],a=Math.abs(v);if(a>peak)peak=a;sum+=v;sq+=v*v;if(a>=0.999)clip++;}
+  const win=Math.round(0.025*sr),hop=Math.round(0.010*sr),E=[];
+  for(let s=0;s+win<=N;s+=hop){let e=0;for(let i=s;i<s+win;i++)e+=y[i]*y[i];E.push(10*Math.log10(e/win+1e-12));}
+  const sorted=[...E].sort((a,b)=>a-b),pct=p=>sorted.length?sorted[Math.min(sorted.length-1,Math.floor(p*sorted.length))]:-120;
+  const noise=pct(0.10),loud=pct(0.95),thr=noise+Math.max(6,0.3*(loud-noise));
+  let m=E.map(e=>e>thr);
+  const runs=mask=>{const R=[];let st=null;mask.forEach((v,i)=>{if(v&&st===null)st=i;if(!v&&st!==null){R.push([st,i]);st=null;}});if(st!==null)R.push([st,mask.length]);return R;};
+  let seg=runs(m).filter(([a,b])=>(b-a)*0.01>=0.05);
+  const merged=[];seg.forEach(s=>{if(merged.length&&(s[0]-merged[merged.length-1][1])*0.01<0.15)merged[merged.length-1][1]=s[1];else merged.push([...s]);});
+  const speechSec=merged.reduce((a,[s,e])=>a+(e-s)*0.01,0);
+  const pauses=[];for(let i=1;i<merged.length;i++){const g=(merged[i][0]-merged[i-1][1])*0.01;if(g>=0.25)pauses.push(g);}
+  const first=merged.length?merged[0][0]*0.01:dur,last=merged.length?merged[merged.length-1][1]*0.01:dur;
+  const span=Math.max(last-first,1e-6);
+  const f0=[],fw=Math.round(0.04*sr),lagMin=Math.floor(sr/400),lagMax=Math.ceil(sr/75);
+  merged.forEach(([a,b])=>{for(let fi=a;fi<b;fi+=2){const s=fi*hop;if(s+fw+lagMax>N)break;
+    let e0=0;for(let i=0;i<fw;i++)e0+=y[s+i]*y[s+i];if(e0<=0)continue;let best=0,bl=0;
+    for(let L=lagMin;L<=lagMax;L++){let c=0,e1=0;for(let i=0;i<fw;i++){c+=y[s+i]*y[s+i+L];e1+=y[s+i+L]*y[s+i+L];}const r=c/Math.sqrt(e0*e1+1e-12);if(r>best){best=r;bl=L;}}
+    if(best>0.6&&bl>0)f0.push(sr/bl);}});
+  const mean=a=>a.reduce((x,v)=>x+v,0)/(a.length||1),sd=a=>{const mu=mean(a);return Math.sqrt(mean(a.map(v=>(v-mu)**2)));};
+  const f0s=[...f0].sort((a,b)=>a-b);
+  const M={
+    QC_Version:QC_VERSION,DurationSec:r3(dur),PeakDBFS:r3(db(peak)),RMS_DBFS:r3(db(Math.sqrt(sq/Math.max(N,1)))),
+    DCOffset:r3(sum/Math.max(N,1)),ClipRatio:Math.round(clip/Math.max(N,1)*1e6)/1e6,
+    NoiseFloorDB:r3(noise),SNR_dB:r3(loud-noise),
+    SpeechSec:r3(speechSec),SilenceRatio:r3(1-speechSec/Math.max(dur,1e-6)),PhonationRatio:r3(speechSec/span),
+    LeadingSilenceSec:r3(first),TrailingSilenceSec:r3(dur-last),SpeechSegments:merged.length,
+    PauseCount:pauses.length,PauseMeanSec:r3(mean(pauses)),PauseMaxSec:r3(pauses.length?Math.max(...pauses):0),
+    PauseTotalSec:r3(pauses.reduce((a,b)=>a+b,0)),LongPauseCount_1s:pauses.filter(p=>p>=1).length,
+    PausesPerMin:r3(pauses.length/(span/60)),
+    F0_MeanHz:r3(mean(f0)),F0_SDHz:r3(sd(f0)),F0_MedianHz:r3(f0s.length?f0s[Math.floor(f0s.length/2)]:0),F0_Frames:f0.length
+  };
+  const fail=[],warn=[];
+  if(M.SpeechSec<(expectSec<20?1.5:3))fail.push("แทบไม่ได้ยินเสียงพูด");
+  if(M.ClipRatio>0.005)fail.push("เสียงแตก เพราะดังหรือใกล้ไมโครโฟนเกินไป");else if(M.ClipRatio>0.0005)warn.push("มีเสียงแตกบางช่วง");
+  if(M.SNR_dB<10)fail.push("เสียงรบกวนรอบข้างมาก");else if(M.SNR_dB<20)warn.push("มีเสียงรบกวนพอสมควร");
+  if(M.RMS_DBFS<-50)fail.push("เสียงเบามาก");else if(M.RMS_DBFS<-40)warn.push("เสียงค่อนข้างเบา");
+  if(expectSec>=60&&M.DurationSec<50)warn.push("อัดไม่ครบ 60 วินาที");
+  M.QC_Status=fail.length?"FAIL":warn.length?"WARN":"PASS";M.QC_Reasons=fail.concat(warn).join(", ");
+  return M;
+}
+function floatTo16BitPCM(f){const o=new Int16Array(f.length);for(let i=0;i<f.length;i++){let s=Math.max(-1,Math.min(1,f[i]));o[i]=s<0?s*0x8000:s*0x7FFF;}return o;}
+function encodeWAV(i16,sr=16000){const buf=new ArrayBuffer(44+i16.length*2),v=new DataView(buf);const w=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));};w(0,"RIFF");v.setUint32(4,36+i16.length*2,true);w(8,"WAVE");w(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,i16.length*2,true);for(let i=0,off=44;i<i16.length;i++,off+=2)v.setInt16(off,i16[i],true);return new Blob([v],{type:"audio/wav"});}
+function blobToBase64(b){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(b);});}
+
+/* ================== เสียงอ่านคำอธิบาย (Text-to-Speech ภาษาไทย ถ้าเครื่องรองรับ) ================== */
+function say(text){
+  if(!("speechSynthesis" in window)){toast("เครื่องนี้ไม่รองรับการอ่านออกเสียง");return;}
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="th-TH";u.rate=.85;
+  const v=speechSynthesis.getVoices().find(v=>/^th/i.test(v.lang));if(v)u.voice=v;else toast("ไม่พบเสียงภาษาไทยในเครื่องนี้ ระบบอาจอ่านไม่ชัด");
+  speechSynthesis.speak(u);
+}
+function toast(msg){const t=$("toast");t.textContent=msg;t.style.display="block";clearTimeout(toast._t);toast._t=setTimeout(()=>t.style.display="none",3500);}
+
+/* ================== การนำทาง ================== */
+function go(step){
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  S.step=step;persist();
+  document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.dataset.step===step));
+  renderRail();renderBar();
+  if(step==="profile"){$("codeShow").textContent=fmtCode(S.code);$("sidShow").textContent=S.sid;}
+  if(step==="survey")renderSurvey();
+  if(step==="done"){$("sidDone").textContent=S.sid;renderDone();if(!S.completedISO){S.completedISO=new Date().toISOString();persist();}$("doneTime").textContent=new Date(S.completedISO).toLocaleString("th-TH",{dateStyle:"long",timeStyle:"short"});renderUploads();}
+  if(TASKS[step])renderTask(step);
+  queueForm();
+  window.scrollTo(0,0);
+  const h=document.querySelector(".screen.on h1");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});}
+}
+function renderRail(){
+  const idx=STEPS.indexOf(S.step);
+  $("rail").innerHTML=RAIL.map(([k,l],j)=>{const i=STEPS.indexOf(k);const c=i<idx?"done":i===idx?"now":"";return`<li class="${c}"${c==="now"?' aria-current="step"':''}><span class="n">${c==="done"?"✓":j+1}</span><span>${l}</span></li>`;}).join("");
+  $("wrap").classList.toggle("solo",S.step==="welcome");
+  const r=RAIL.findIndex(x=>x[0]===S.step);
+  $("mstep").hidden=r<0;
+  if(r>=0)$("mstep").innerHTML=`ขั้นตอนที่ ${r+1} จาก ${RAIL.length} · <b>${RAIL[r][1]}</b><div class="q-bar"><i style="width:${(r+1)/RAIL.length*100}%"></i></div>`;
+}
+function stepReady(step){
+  if(step==="consent")return S.consentJoin&&S.consentAudio;
+  if(step==="survey")return iqDone(S);
+  if(step==="mic")return !!S.mic&&S.mic.QC_Status!=="FAIL"||!!S.micOverride;
+  if(TASKS[step]){const a=activeOf(S,step);return !a||a.remote||a.override||a.qc.QC_Status!=="FAIL";}
+  return true;
+}
+let busy=false;
+function renderBar(){
+  const st=S.step,next=$("btnNext"),back=$("btnBack");
+  back.hidden=st==="welcome"||st==="done";
+  back.disabled=busy;
+  const labels={welcome:"เริ่มทำแบบทดสอบ",consent:"ยินยอมและดำเนินการต่อ",profile:"ถัดไป",survey:"ถัดไป",mic:"ไปข้อที่ 1",PFT:"ไปข้อที่ 2",CTD:"ไปข้อที่ 3",SFT:"ส่งข้อมูลและเสร็จสิ้น",done:"เสร็จสิ้น"};
+  if(TASKS[st]&&!activeOf(S,st))labels[st]=st==="SFT"?"ข้ามและเสร็จสิ้น":`ข้ามไปข้อที่ ${TASKS[st].n+1}`;
+  next.textContent=labels[st];
+  next.hidden=st==="done";
+  next.disabled=busy||!stepReady(st)&&st!=="profile"&&st!=="consent";
+  if(st==="welcome"&&hadSaved&&!resumeDismissed)next.hidden=true;
+}
+$("btnBack").onclick=()=>{const i=STEPS.indexOf(S.step);if(i>0)go(STEPS[i-1]);};
+$("btnNext").onclick=()=>{
+  const st=S.step;
+  if(st==="consent"&&!stepReady(st)){$("consentErr").style.display="block";return;}
+  if(st==="profile"&&!validateProfile())return;
+  if(st==="SFT"){finishSession();return;}
+  go(STEPS[STEPS.indexOf(st)+1]);
+};
+
+/* ---------- welcome / resume ---------- */
+let resumeDismissed=false;
+if(hadSaved){
+  const lbl=(RAIL.find(r=>r[0]===resumeStep)||[,""])[1];
+  const left=3-tasksDoneOf(S).length;
+  $("resumeInfo").textContent=resumeStep==="done"?`รหัสกลับมาทำต่อ ${fmtCode(S.code)} · ยังเหลือการพูด ${left} ข้อ`:`รหัสกลับมาทำต่อ ${fmtCode(S.code)} · ทำถึงขั้น "${lbl}"`;
+  $("resumeBox").hidden=false;
+}
+$("btnResume").onclick=()=>{resumeDismissed=true;$("resumeBox").hidden=true;go(resumeStep==="done"?firstMissing():resumeStep||"consent");};
+$("btnFresh").onclick=async()=>{
+  if((await pendingCount())>0&&!confirm("ยังมีข้อมูลของผู้เข้าร่วมคนก่อนที่ยังส่งไม่สำเร็จ ระบบจะเก็บไว้และส่งต่อให้อัตโนมัติ ต้องการเริ่มคนใหม่หรือไม่"))return;
+  resetSession();
+};
+function resetSession(){S=blankState();persist();resumeDismissed=true;$("resumeBox").hidden=true;fillAllInputs();go("welcome");}
+
+/* ---------- consent ---------- */
+["consentJoin","consentAudio"].forEach(id=>$(id).addEventListener("change",e=>{S[id]=e.target.checked;persist();$("consentErr").style.display="none";renderBar();}));
+const CONSENT_SAY="โครงการนี้อยู่ในช่วงทดลองระบบ และยังไม่ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ ข้อมูลในช่วงนี้ใช้เพื่อทดสอบและปรับปรุงระบบเท่านั้น จะไม่นำไปใช้เป็นผลการวิจัย ท่านจะกรอกข้อมูลพื้นฐาน ตอบแบบสอบถามเรื่องความเปลี่ยนแปลงของความจำสิบหกข้อ โดยควรให้คนใกล้ชิดเป็นผู้ตอบ และพูดตามโจทย์สามข้อ ข้อละหนึ่งนาที ระบบจะบันทึกเสียงไว้ ใช้เวลาประมาณสิบห้านาที ระบบนี้ไม่สามารถวินิจฉัยโรคหรือให้ผลประเมินได้ ท่านหยุดหรือถอนตัวได้ทุกเมื่อ และขอให้ลบข้อมูลได้โดยแจ้งรหัสผู้เข้าร่วมแก่ผู้จัดทำ ถ้ายินยอม โปรดทำเครื่องหมายทั้งสองข้อ";
+
+/* ---------- profile ---------- */
+function readProfile(){
+  const P=S.profile;
+  P.age=$("age").value.trim();P.education=$("education").value;P.eduYears=$("eduYears").value.trim();P.accent=$("accent").value;P.firstLang=$("firstLang").value;
+  P.gender=(document.querySelector('input[name=gender]:checked')||{}).value||"";
+  P.helper=(document.querySelector('input[name=helper]:checked')||{}).value||"";
+  P.speechFactors=[...document.querySelectorAll('#speechFactors input:checked')].map(i=>i.value);
+  P.caregiver=$("caregiver").value.trim();
+  persist();
+}
+document.querySelector('[data-step=profile]').addEventListener("input",e=>{const f=e.target.closest(".field");if(f&&e.target.value)f.classList.remove("bad");});
+document.querySelector('[data-step=profile]').addEventListener("change",e=>{
+  if(e.target.closest("#speechFactors")){const none=document.querySelector('#speechFactors input[value="ไม่มี"]');if(e.target===none&&none.checked)document.querySelectorAll('#speechFactors input').forEach(i=>{if(i!==none)i.checked=false;});else if(e.target!==none&&e.target.checked)none.checked=false;}
+  const f=e.target.closest(".field");if(f)f.classList.remove("bad");
+  readProfile();queueForm();
+});
+function validateProfile(){
+  readProfile();const P=S.profile;let first=null;
+  const chk=(id,ok)=>{$(id).classList.toggle("bad",!ok);if(!ok&&!first)first=$(id);};
+  const a=Number(P.age);chk("f-age",P.age!==""&&Number.isInteger(a)&&a>=18&&a<=110);
+  chk("f-gender",!!P.gender);chk("f-education",!!P.education);chk("f-accent",!!P.accent);chk("f-lang",!!P.firstLang);chk("f-helper",!!P.helper);
+  if(first){first.scrollIntoView({block:"center",behavior:"smooth"});const i=first.querySelector("input,select");if(i)i.focus({preventScroll:true});toast("โปรดกรอกช่องที่มีกรอบสีแดง");}
+  return !first;
+}
+function fillAllInputs(){
+  const P=S.profile;$("age").value=P.age||"";$("education").value=P.education||"";$("eduYears").value=P.eduYears||"";$("accent").value=P.accent||"";$("firstLang").value=P.firstLang||"";$("caregiver").value=P.caregiver||"";
+  document.querySelectorAll('input[name=gender]').forEach(i=>i.checked=i.value===P.gender);
+  document.querySelectorAll('input[name=helper]').forEach(i=>i.checked=i.value===P.helper);
+  document.querySelectorAll('#speechFactors input').forEach(i=>i.checked=(P.speechFactors||[]).includes(i.value));
+  $("consentJoin").checked=S.consentJoin;$("consentAudio").checked=S.consentAudio;
+  document.querySelectorAll(".field.bad").forEach(f=>f.classList.remove("bad"));
+}
+
+/* ---------- questionnaire ---------- */
+const isSelfFiller=()=>S.profile&&S.profile.helper==="ผู้เข้าร่วมเอง";
+function renderSurvey(){
+  const iq=S.iq;
+  /* ผู้เข้าร่วมกรอกเอง → เข้าแบบสอบถามฉบับตอบเองทันที ; ญาติ/ผู้ดูแล หรือเจ้าหน้าที่กรอก → เลือกผู้ให้ข้อมูลก่อน */
+  if(isSelfFiller()){
+    if(iq.mode!=="self"){if(iq.ansFor&&iq.ansFor!=="self")iq.ans={};iq.mode="self";iq.type="";iq.ansFor="self";S.qIndex=Math.min(Object.keys(iq.ans).length,IQ_ITEMS.length-1);persist();queueForm();}
+  }else if(iq.mode==="self"){iq.mode="";persist();}
+  const form=!!iq.mode&&iq.mode!=="later";
+  $("iqSetup").hidden=form;$("iqForm").hidden=!form;
+  if(!form){
+    document.querySelectorAll("input[name=iqtype]").forEach(r=>r.checked=(iq.mode==="later"?r.value==="later":iq.mode==="self"?r.value==="self":r.value===iq.type&&!!iq.type));
+    $("iqRel").value=iq.rel||"";$("iqContact").value=iq.contact||"";$("iqKnown").value=iq.known||"";$("iqConsent").checked=iq.consent==="yes";
+    $("iqLaterCode").textContent=fmtCode(S.code);
+    iqSetupUI();return;
+  }
+  $("iqInstrText").innerHTML=iq.mode==="self"?IQ_INSTR_SELF:IQ_INSTR_INFORMANT;
+  $("iqInstr").open=Object.keys(iq.ans).length===0;   // แสดงคำชี้แจงเต็มตอนเริ่ม แล้วพับเก็บ (กดเปิดดูได้)
+  $("iqWho").textContent=iq.mode==="self"?"ผู้เข้าร่วมทดสอบตอบเอง":`ผู้ตอบ: ${iq.type}`;
+  renderQuestion();
+}
+function iqSetupUI(){
+  const v=(document.querySelector("input[name=iqtype]:checked")||{}).value||"";
+  const inf=v&&v!=="self"&&v!=="later";
+  $("iqInf").hidden=!inf;$("iqLaterNote").hidden=v!=="later";
+  $("iqKnownNote").hidden=$("iqKnown").value!=="<10";
+  $("iqStart").textContent=v==="later"?"ข้ามไปก่อน":"เริ่มตอบแบบสอบถาม";
+  $("iqStart").hidden=!v;
+}
+document.getElementById("iqSetup").addEventListener("change",()=>{document.querySelectorAll("#iqSetup .field.bad").forEach(f=>f.classList.remove("bad"));iqSetupUI();});
+$("iqStart").onclick=()=>{
+  const v=(document.querySelector("input[name=iqtype]:checked")||{}).value||"";
+  if(!v){$("f-iqtype").classList.add("bad");return;}
+  const iq=S.iq;
+  if(v==="later"){iq.mode="later";persist();queueForm();renderBar();go("mic");return;}
+  const owner=v==="self"?"self":"informant";
+  if(iq.ansFor&&iq.ansFor!==owner)iq.ans={};   // คำตอบของตัวเองกับของญาติต้องไม่ปนกัน
+  if(v==="self"){iq.mode="self";iq.type="";}
+  else{
+    let bad=false;
+    if(!$("iqContact").value){$("f-iqContact").classList.add("bad");bad=true;}
+    if(!$("iqKnown").value){$("f-iqKnown").classList.add("bad");bad=true;}
+    if(!$("iqConsent").checked){$("f-iqConsent").style.borderColor="var(--err)";bad=true;}else $("f-iqConsent").style.borderColor="";
+    if(bad){toast("โปรดกรอกช่องที่มีกรอบสีแดง");return;}
+    iq.mode="informant";iq.type=v;iq.rel=$("iqRel").value.trim().slice(0,60);iq.contact=$("iqContact").value;iq.known=$("iqKnown").value;iq.consent="yes";
+  }
+  iq.ansFor=owner;
+  S.qIndex=Math.min(Object.keys(iq.ans).length,IQ_ITEMS.length-1);
+  persist();queueForm();renderSurvey();renderBar();window.scrollTo(0,0);
+};
+$("iqChange").onclick=()=>{
+  if(isSelfFiller()){toast("ถ้าญาติหรือผู้ดูแลจะเป็นผู้ตอบ ให้เปลี่ยนช่อง \"ผู้กรอกแบบฟอร์มนี้\" ที่หน้าข้อมูลผู้เข้าร่วม");go("profile");return;}
+  const n=Object.keys(S.iq.ans).length;
+  if(n&&!confirm("ถ้าเปลี่ยนผู้ตอบระหว่างญาติกับผู้เข้าร่วมทดสอบตอบเอง คำตอบที่ตอบไปแล้วจะถูกล้าง ต้องการเปลี่ยนหรือไม่"))return;
+  S.iq.mode="";persist();renderSurvey();renderBar();
+};
+function renderQuestion(){
+  const i=Math.min(S.qIndex||0,IQ_ITEMS.length-1);S.qIndex=i;
+  const sc=iqScore(S);
+  $("qPos").textContent=`ข้อ ${i+1} / ${IQ_ITEMS.length}`;
+  $("qBar").style.width=(sc.done/IQ_ITEMS.length*100)+"%";
+  $("qStem").textContent=S.iq.mode==="self"?"เทียบกับเมื่อ 10 ปีก่อน ตัวท่านตอนนี้เป็นอย่างไร":"เทียบกับเมื่อ 10 ปีก่อน ผู้เข้าร่วมทดสอบตอนนี้เป็นอย่างไร";
+  $("qText").textContent=`${i+1}. ${IQ_ITEMS[i]}`;
+  const cur=S.iq.ans[iqKey(i)];
+  $("qAnswers").innerHTML=iqChoices().map(c=>`<button class="ans" role="radio" aria-checked="${cur===c.score}" data-score="${c.score}"><span class="box"></span><span>${c.text}${c.hint?`<small class="ans-hint">${c.hint}</small>`:""}</span><span class="sc">${c.score}</span></button>`).join("");
+  $("qNA").setAttribute("aria-checked",String(cur===IQ_NA));
+  $("qNA").lastChild.textContent="ไม่แน่ใจ";
+  $("qPrev").disabled=i===0;$("qNext").disabled=i===IQ_ITEMS.length-1||cur===undefined;
+}
+let qLock=0;
+function answerQ(val){
+  if(Date.now()<qLock)return;              // กันแตะซ้ำเร็ว ๆ แล้วไปตอบข้อถัดไป
+  const i=S.qIndex;S.iq.ans[iqKey(i)]=val;persist();queueForm();
+  renderQuestion();renderBar();
+  if(i===0)$("iqInstr").open=false;
+  if(i<IQ_ITEMS.length-1){qLock=Date.now()+600;setTimeout(()=>{if(S.qIndex===i){S.qIndex=i+1;persist();renderQuestion();}},350);}
+  else toast(`ตอบครบ ${IQ_ITEMS.length} ข้อแล้ว กด "ถัดไป" เพื่อไปขั้นตอนต่อไป`);
+}
+$("qAnswers").addEventListener("click",e=>{const b=e.target.closest(".ans");if(b)answerQ(Number(b.dataset.score));});
+$("qNA").onclick=()=>answerQ(IQ_NA);
+$("qPrev").onclick=()=>{S.qIndex--;persist();renderQuestion();};
+$("qNext").onclick=()=>{S.qIndex++;persist();renderQuestion();};
+
+/* ---------- mic check ---------- */
+$("btnMic").onclick=async()=>{
+  const btn=$("btnMic");btn.disabled=true;busy=true;renderBar();$("micResult").innerHTML="";
+  let cap;
+  try{cap=await startRawCapture(l=>{$("micMeter").style.width=Math.min(100,Math.max(0,(20*Math.log10(l+1e-9)+60)/50*100))+"%";});}
+  catch(e){$("micState").textContent="";$("micResult").innerHTML=micErrorHtml(e);btn.disabled=false;busy=false;renderBar();return;}
+  let left=6;$("micState").textContent=`กำลังฟัง… ${left} วินาที`;
+  await new Promise(r=>{const t=setInterval(()=>{left--;$("micState").textContent=left>0?`กำลังฟัง… ${left} วินาที`:"กำลังตรวจ…";if(left<=0){clearInterval(t);r();}},1000);});
+  const {samples,sampleRate,settings}=await cap.stop();$("micMeter").style.width="0";
+  const y=await resampleTo16k(samples,sampleRate);const M=analyzeAudio(y,16000,6);
+  M.CaptureSampleRate=sampleRate;S.mic=M;persist();queueForm();
+  $("micState").textContent="";
+  const cls=M.QC_Status==="PASS"?"ok":M.QC_Status==="WARN"?"warn":"fail";
+  const head=M.QC_Status==="PASS"?"เสียงชัดเจน พร้อมเริ่มแบบทดสอบ":M.QC_Status==="WARN"?"ใช้ได้ แต่ควรปรับเล็กน้อย":"ยังได้ยินเสียงไม่ชัด";
+  const tips=M.QC_Status==="PASS"?"":`<p>${M.QC_Reasons}</p><p class="muted">${adviceFor(M)}</p>`;
+  $("micResult").innerHTML=`<div class="result ${cls}"><h3>${head}</h3>${tips}<div class="row">${M.QC_Status==="FAIL"?'<button class="linkbtn" id="micSkip">ข้ามการทดสอบ (เจ้าหน้าที่ตรวจแล้ว)</button>':''}</div></div>`;
+  if($("micSkip"))$("micSkip").onclick=()=>{S.micOverride=true;persist();renderBar();toast("ข้ามการทดสอบเสียงแล้ว");};
+  btn.disabled=false;btn.textContent="ทดสอบอีกครั้ง";busy=false;renderBar();
+};
+function adviceFor(M){
+  const a=[];if(/รบกวน/.test(M.QC_Reasons))a.push("ย้ายไปที่เงียบกว่า หรือปิดพัดลม/โทรทัศน์");
+  if(/เบา|ไม่ได้ยิน/.test(M.QC_Reasons))a.push("พูดดังขึ้นเล็กน้อย หรือขยับไมโครโฟนเข้าใกล้");
+  if(/แตก/.test(M.QC_Reasons))a.push("ขยับไมโครโฟนออกห่างจากปากเล็กน้อย");
+  return a.join(" · ")||"ลองอัดใหม่อีกครั้ง";
+}
+function micErrorHtml(e){
+  const denied=/NotAllowed|Permission|denied/i.test(e.name+e.message);
+  return`<div class="result fail"><h3>${denied?"ยังไม่ได้รับอนุญาตให้ใช้ไมโครโฟน":"เปิดไมโครโฟนไม่สำเร็จ"}</h3><p>${denied?"กดรูปแม่กุญแจหรือไมโครโฟนที่แถบที่อยู่เว็บ เลือก \"อนุญาต\" แล้วกดทดสอบอีกครั้ง":"ตรวจว่าเครื่องมีไมโครโฟน และไม่มีแอปอื่นใช้งานอยู่"}</p><p class="muted">${e.name||""} ${e.message||""}</p></div>`;
+}
+
+/* ---------- speaking tasks ---------- */
+const live={};
+function renderTask(p){
+  const T=TASKS[p],sec=document.querySelector(`[data-step=${p}]`);
+  if(sec.dataset.built){updateTaskResult(p);return;}
+  sec.dataset.built="1";
+  sec.innerHTML=`<p class="crumb">แบบทดสอบการพูด ข้อ ${T.n} จาก 3</p>
+    <h1 id="h-${p}">${T.title}</h1>
+    <div class="panel"><div class="panel-h"><h2>คำชี้แจง</h2><button class="btn2" data-say="task:${p}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>อ่านออกเสียง</button></div><div class="panel-b">${T.body}</div></div>
+    <div class="task-grid${p==="CTD"?" ctd":""}">
+      ${p==="CTD"?`<figure class="ctd-fig"><img id="ctdImg" alt="ภาพสำหรับเล่า"><figcaption>ภาพสำหรับแบบทดสอบการเล่าภาพ</figcaption></figure>`:""}
+      <div>
+        <div class="console" id="con-${p}" data-state="idle">
+          <div class="c-top"><span class="c-state"><i></i><span id="cst-${p}"></span></span><span>เวลาบันทึก 1 นาที</span></div>
+          <div class="c-time" id="ct-${p}">01:00</div>
+          <div class="c-prog"><i id="cp-${p}"></i></div>
+          <div class="c-lvl" id="cl-${p}" aria-hidden="true">${"<b></b>".repeat(24)}</div>
+          <div class="c-cap"><span>ระดับเสียงที่ไมโครโฟนรับได้</span></div>
+          <div class="rec-actions"><button class="btn btn-rec" id="rec-${p}"></button><button class="btn btn-cancel" id="cancel-${p}" hidden>ยกเลิก</button></div>
+        </div>
+        <p class="muted" id="help-${p}" aria-live="polite" style="margin:.6rem 0 0"></p>
+        <div id="res-${p}"></div>
+      </div>
+    </div>`;
+  if(p==="CTD"){const img=$("ctdImg");img.onerror=()=>{if(img.dataset.fb){img.replaceWith(Object.assign(document.createElement("div"),{className:"ctd-missing",textContent:"ไม่พบไฟล์ภาพ ให้วางไฟล์ ctd.jpg ไว้ในโฟลเดอร์เดียวกับหน้านี้"}));return;}img.dataset.fb="1";img.src=CONFIG.ctdFallback;};img.src=CONFIG.ctdImage;}
+  $("rec-"+p).onclick=()=>startTask(p);
+  $("cancel-"+p).onclick=()=>{if(live[p]){live[p].cancelled=true;if(live[p].end)live[p].end();}};
+  setDial(p,"idle");updateTaskResult(p);
+}
+const mmss=s=>`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+function setDial(p,state,val){
+  const c=$("con-"+p);if(!c)return;c.dataset.state=state;
+  const b=$("rec-"+p),st=$("cst-"+p),t=$("ct-"+p),h=$("help-"+p);const n=S.tasks[p].length;
+  if(state==="idle"){const act=activeOf(S,p);b.disabled=false;b.hidden=!!act;b.innerHTML=`<span class="dot"></span>เริ่มบันทึกเสียง`;
+    st.textContent=act?"บันทึกเสียงข้อนี้แล้ว":"พร้อมบันทึก";t.textContent=mmss(CONFIG.recordSec);
+    h.textContent=act?"":"เมื่อกดปุ่ม ระบบจะนับถอยหลัง 3 วินาที แล้วบันทึกต่อเนื่อง 1 นาทีเต็ม ระหว่างบันทึกไม่ต้องกดอะไร";setProg(p,act?1:0);setLevel(p,0);}
+  else b.hidden=false;
+  if(state==="count"){b.disabled=true;b.textContent="เตรียมพูด";st.textContent="เริ่มบันทึกใน";t.textContent=String(val);h.textContent="";}
+  if(state==="recording"){b.disabled=true;b.textContent="กำลังบันทึก";st.textContent="กำลังบันทึก";t.textContent=mmss(val);h.textContent="พูดได้เลย ระบบจะหยุดเองเมื่อครบ 1 นาที";}
+  if(state==="busy"){b.disabled=true;b.textContent="กำลังตรวจคุณภาพเสียง";st.textContent="หยุดบันทึกแล้ว";h.textContent="";setLevel(p,0);}
+  $("cancel-"+p).hidden=!(state==="recording"||state==="count");
+  $("cancel-"+p).textContent=state==="count"?"ยกเลิก":"ยกเลิก (ไม่เก็บเสียงนี้)";
+}
+function setProg(p,frac){const i=$("cp-"+p);if(i)i.style.width=(frac*100).toFixed(1)+"%";}
+function setLevel(p,l){const el=$("cl-"+p);if(!el)return;const v=l?Math.min(1,Math.max(0,(20*Math.log10(l+1e-9)+55)/45)):0;const on=Math.round(v*24);[...el.children].forEach((b,i)=>{b.className=i<on?(i>=20?"hot":"on"):"";});}
+async function startTask(p){
+  if(busy||activeOf(S,p))return;busy=true;renderBar();
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  $("res-"+p).innerHTML="";
+  const L={cancelled:false,reason:""};live[p]=L;
+  $("con-"+p).scrollIntoView({block:"center",behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
+  let cap;
+  try{cap=await startRawCapture(l=>setLevel(p,l));}
+  catch(e){$("res-"+p).innerHTML=micErrorHtml(e);busy=false;setDial(p,"idle");renderBar();return;}
+  // ต้องบันทึกต่อเนื่อง: ถ้าสลับแอป/ปิดหน้าจอ หรือไมโครโฟนหลุด ให้ทิ้งเสียงนี้
+  const abort=reason=>{if(L.cancelled)return;L.cancelled=true;L.reason=reason;if(L.end)L.end();};
+  const onHide=()=>{if(document.hidden)abort("hidden");};
+  document.addEventListener("visibilitychange",onHide);
+  if(cap.track)cap.track.addEventListener("ended",()=>abort("mic"));
+  // นับถอยหลัง 3-2-1 (เสียงช่วงนี้ถูกตัดทิ้ง ไม่รวมในไฟล์)
+  for(let n=3;n>0;n--){setDial(p,"count",n);await new Promise(r=>setTimeout(r,1000));if(L.cancelled)break;}
+  const t0=performance.now();
+  let ended=false;
+  await new Promise(res=>{
+    L.end=()=>{if(!ended){ended=true;res();}};
+    if(L.cancelled){L.end();return;}
+    const tick=()=>{if(ended)return;const el=(performance.now()-t0)/1000;const left=Math.max(0,Math.ceil(CONFIG.recordSec-el));setDial(p,"recording",left);setProg(p,Math.min(1,el/CONFIG.recordSec));if(el>=CONFIG.recordSec)L.end();else setTimeout(tick,100);};
+    tick();
+  });
+  document.removeEventListener("visibilitychange",onHide);
+  const elapsed=(performance.now()-t0)/1000;
+  if(L.cancelled){
+    cap.cancel();busy=false;setDial(p,"idle");renderBar();
+    const why={hidden:"หน้าจอถูกสลับออกหรือปิดไประหว่างบันทึก",mic:"ไมโครโฟนหยุดทำงานระหว่างบันทึก"}[L.reason];
+    $("res-"+p).innerHTML=why?`<div class="result fail"><h3>ไม่ได้เก็บเสียงครั้งนี้</h3><p>${why} ต้องบันทึกต่อเนื่องให้ครบ 1 นาที กดปุ่มเพื่อบันทึกใหม่</p></div>`:"";
+    toast(why?"ไม่ได้เก็บเสียงครั้งนี้ กรุณาบันทึกใหม่":"ยกเลิกแล้ว ไม่ได้เก็บเสียง");return;}
+  setDial(p,"busy");
+  try{
+    const {samples,sampleRate,settings}=await cap.stop();
+    const cut=Math.min(samples.length,Math.max(0,Math.round(samples.length-elapsed*sampleRate)-Math.round(0.05*sampleRate)));
+    let y=await resampleTo16k(samples.subarray(cut),sampleRate);
+    const N=CONFIG.recordSec*16000;
+    if(y.length<N-0.5*16000)throw new Error("ได้เสียงไม่ครบ 1 นาที (เครื่องอาจทำงานช้า) กรุณาบันทึกใหม่");
+    if(y.length>N)y=y.subarray(0,N);
+    else if(y.length<N){const z=new Float32Array(N);z.set(y);y=z;}
+    const wav=encodeWAV(floatTo16BitPCM(y),16000);
+    const M=analyzeAudio(y,16000,CONFIG.recordSec);
+    M.CaptureSampleRate=sampleRate;M.Mic_EchoCancellation=String(settings.echoCancellation);M.Mic_NoiseSuppression=String(settings.noiseSuppression);M.Mic_AutoGain=String(settings.autoGainControl);
+    const attempt=S.tasks[p].length+1;M.Attempt=attempt;M.AppVersion=APP_VERSION;M.StudyPhase=CONFIG.studyPhase;M.MicCheck_Status=S.mic?S.mic.QC_Status:"";
+    const now=new Date(),pd=n=>String(n).padStart(2,"0");
+    const filename=`${S.sid}_${p}_${now.getFullYear()}${pd(now.getMonth()+1)}${pd(now.getDate())}_${pd(now.getHours())}${pd(now.getMinutes())}${pd(now.getSeconds())}.wav`;
+    const P=S.profile;
+    const payload={type:"audio",code:S.code,Filename:filename,SubjectID:S.sid,Task:p,Gender:P.gender||"",Education:P.education||"",RegionAccent:P.accent||"",Age:P.age||"",
+      DurationSec:CONFIG.recordSec,Recorder:navigator.userAgent,DateTimeISO:now.toISOString(),Metrics:M,AudioBase64:await blobToBase64(wav)};
+    const job={id:`audio-${S.sid}-${p}-${attempt}-${Date.now()}`,kind:"audio",created:Date.now(),payload};
+    const a={attempt,filename,qc:M,jobId:job.id,upload:"pending",when:now.toISOString()};
+    S.tasks[p].push(a);
+    persist();
+    liveAudio[p+attempt]=URL.createObjectURL(wav);
+    await Q.put(job);flushQueue();queueForm();
+  }catch(err){$("res-"+p).innerHTML=`<div class="result fail"><h3>ประมวลผลเสียงไม่สำเร็จ</h3><p>${String(err.message).replace(/</g,"&lt;")}</p></div>`;}
+  busy=false;setDial(p,"idle");updateTaskResult(p);renderBar();
+}
+const liveAudio={};
+function updateTaskResult(p){
+  const box=$("res-"+p);if(!box)return;const a=activeOf(S,p);
+  if(!a){if(!box.querySelector(".result.fail"))box.innerHTML="";return;}
+  let html;
+  if(a.remote){
+    html=`<div class="result ok"><h3>บันทึกเสียงข้อนี้ไว้แล้ว</h3><p>ส่งข้อมูลไว้เมื่อ ${a.when?new Date(a.when).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"}):"ครั้งก่อน"} หากต้องการบันทึกใหม่ ให้ลบไฟล์นี้ก่อน</p>`;
+  }else{
+    const M=a.qc,q=a.override?"WARN":M.QC_Status;
+    const cls=q==="PASS"?"ok":q==="WARN"?"warn":"fail";
+    const head=q==="PASS"?"บันทึกเสียงเรียบร้อย":q==="WARN"?"บันทึกเสียงแล้ว":"เสียงยังไม่ชัดพอ";
+    const msg=a.override?"เจ้าหน้าที่ยืนยันให้ใช้ไฟล์นี้":q==="PASS"?"กดปุ่มด้านล่างเพื่อไปข้อถัดไป":q==="WARN"?`ใช้ได้ แต่${M.QC_Reasons} หากต้องการบันทึกใหม่ ให้ลบไฟล์นี้ก่อน`:`${M.QC_Reasons} ${adviceFor(M)} จากนั้นลบไฟล์นี้แล้วบันทึกใหม่`;
+    const src=liveAudio[p+a.attempt];
+    html=`<div class="result ${cls}"><h3>${head}</h3><p>${msg}</p>${src?`<audio controls src="${src}"></audio>`:""}<p class="muted" style="font-size:.75rem;margin:0 0 .5rem">${uploadLabel(a.upload,a.uploadError)}</p>`;
+    if(q==="FAIL"&&!a.override&&sessionStorage.getItem("sds_staff_key"))html+=`<div class="row" style="margin-bottom:.5rem"><button class="linkbtn" id="use-${p}">ใช้ไฟล์นี้ต่อไป (เจ้าหน้าที่ยืนยัน)</button></div>`;
+  }
+  html+=`<div class="row"><button class="btn btn-back btn-sm" id="del-${p}">ลบไฟล์นี้ แล้วบันทึกใหม่</button></div></div>`;
+  box.innerHTML=html;
+  $("del-"+p).onclick=()=>askDelete(p);
+  if($("use-"+p))$("use-"+p).onclick=()=>{a.override=true;persist();queueForm();updateTaskResult(p);renderBar();};
+}
+function askDelete(p){
+  if(busy)return;
+  $("delTask").textContent=`ข้อที่ ${TASKS[p].n} ${TASKS[p].title}`;
+  $("dlgDel").dataset.task=p;$("dlgDel").showModal();
+}
+async function deleteActive(p){
+  const a=activeOf(S,p);if(!a)return;
+  if(a.remote){S.remote[p]=null;}
+  else{
+    a.deleted=true;a.deletedISO=new Date().toISOString();
+    const pending=(await Q.all()).find(j=>j.id===a.jobId);
+    const unsent=pending&&pending.id!==inflight;
+    if(unsent){await Q.del(a.jobId);a.upload="cancelled";}           // ยังไม่ได้ส่ง: ทิ้งจากคิวเลย
+    if(liveAudio[p+a.attempt]){URL.revokeObjectURL(liveAudio[p+a.attempt]);delete liveAudio[p+a.attempt];}
+    if(unsent){persist();finishDelete(p);return;}
+  }
+  // ส่งไปแล้ว: แจ้งเซิร์ฟเวอร์ให้ย้ายไฟล์ไปที่ลบ
+  await Q.put({id:`discard-${S.sid}-${p}-${Date.now()}`,kind:"discard",created:Date.now(),payload:{type:"discard",code:S.code,SubjectID:S.sid,Task:p}});
+  persist();flushQueue();finishDelete(p);
+}
+function finishDelete(p){queueForm();$("res-"+p).innerHTML="";setDial(p,"idle");renderBar();toast("ลบไฟล์แล้ว กดปุ่มเพื่อบันทึกใหม่");}
+function uploadLabel(s,err){return s==="sent"?"ส่งข้อมูลแล้ว":s==="error"?"ยังส่งไม่สำเร็จ จะลองส่งใหม่อัตโนมัติ":s==="rejected"?`เซิร์ฟเวอร์ไม่รับไฟล์นี้ (${err||"ไม่ทราบสาเหตุ"}) กรุณาลบแล้วบันทึกใหม่ หรือแจ้งเจ้าหน้าที่`:s==="cancelled"?"ลบแล้ว":"กำลังส่งข้อมูล…";}
+
+/* ---------- done ---------- */
+function firstMissing(){return["PFT","CTD","SFT"].find(p=>!activeOf(S,p))||"PFT";}
+function renderDone(){
+  const miss=["PFT","CTD","SFT"].filter(p=>!activeOf(S,p));
+  $("h-done").textContent=miss.length?"บันทึกไว้แล้วบางส่วน":"บันทึกการทดสอบครบเรียบร้อย";
+  $("doneMissing").hidden=!miss.length;$("doneCode").hidden=!miss.length;
+  $("missingList").innerHTML=miss.map(p=>`<li>ข้อที่ ${TASKS[p].n} ${TASKS[p].title}</li>`).join("");
+  $("codeDone").textContent=fmtCode(S.code);
+  $("btnNextPerson").textContent=miss.length?"จบรอบนี้ และเริ่มผู้เข้าร่วมคนใหม่":"เริ่มผู้เข้าร่วมคนใหม่";
+}
+$("btnDoRest").onclick=()=>{S.completedISO="";go(firstMissing());};
+$("delNo").onclick=()=>$("dlgDel").close();
+$("delYes").onclick=()=>{const p=$("dlgDel").dataset.task;$("dlgDel").close();deleteActive(p);};
+
+/* ---------- กลับมาทำต่อด้วยรหัส (เครื่องอื่น/เบราว์เซอร์อื่น) ---------- */
+$("resumeCode").addEventListener("input",e=>{const v=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8);e.target.value=v.length>4?v.slice(0,4)+"-"+v.slice(4):v;$("f-code").classList.remove("bad");});
+$("resumeCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("btnCode").click();});
+$("btnCode").onclick=async()=>{
+  const code=$("resumeCode").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
+  const bad=m=>{$("codeErr").textContent=m;$("f-code").classList.add("bad");};
+  if(!/^[A-HJ-NP-Z2-9]{8}$/.test(code))return bad("รหัสต้องมี 8 ตัว (ตัวอักษรภาษาอังกฤษและตัวเลข)");
+  if(code===S.code&&hadSaved){$("btnResume").click();return;}
+  if(!navigator.onLine)return bad("ต้องเชื่อมต่ออินเทอร์เน็ตเพื่อค้นหารหัส");
+  const b=$("btnCode");b.disabled=true;b.textContent="กำลังค้นหา…";
+  try{
+    const js=await postJSON({type:"status",code});
+    if((await pendingCount())>0&&S.code!==code&&hadSaved&&!confirm("เครื่องนี้มีข้อมูลของผู้เข้าร่วมอีกคนที่ยังส่งไม่ครบ ระบบจะเก็บไว้ส่งต่อให้ ทำต่อด้วยรหัสนี้หรือไม่")){return;}
+    const n=blankState();n.sid=js.sid;n.code=code;n.consentJoin=n.consentAudio=!!js.consent;n.resumedFromServer=true;
+    const pr=js.profile||{};n.profile={age:String(pr.age||""),gender:pr.gender||"",education:pr.education||"",accent:pr.accent||"",firstLang:pr.firstLang||"",helper:pr.helper||""};
+    const jq=js.iq||{};n.iq={ansFor:jq.mode==="self"?"self":jq.mode==="informant"?"informant":"",mode:jq.mode||"",type:jq.type||"",rel:jq.rel||"",contact:jq.contact||"",known:jq.known||"",consent:jq.consent||"",ans:jq.ans||{}};n.qIndex=Math.min(Object.keys(n.iq.ans).length,IQ_ITEMS.length-1);
+    for(const p of ["PFT","CTD","SFT"])if(js.tasks&&js.tasks[p])n.remote[p]={filename:String(js.tasks[p].filename||""),when:String(js.tasks[p].when||""),qc:{QC_Status:String(js.tasks[p].qc||"")}};
+    S=n;persist();resumeDismissed=true;$("resumeBox").hidden=true;fillAllInputs();
+    document.querySelectorAll("[data-step] [data-built]").forEach(()=>{});
+    ["PFT","CTD","SFT"].forEach(p=>{const sec=document.querySelector(`[data-step=${p}]`);delete sec.dataset.built;sec.innerHTML="";});
+    const left=3-tasksDoneOf(S).length;
+    toast(left?`พบข้อมูลแล้ว เหลือการพูด ${left} ข้อ`:"รหัสนี้บันทึกเสียงครบทั้ง 3 ข้อแล้ว");
+    const P=S.profile;
+    go(!S.consentJoin?"consent":!P.age||!P.gender||!P.education||!P.accent||!P.firstLang||!P.helper?"profile":(!S.iq.mode||S.iq.mode==="later"||!iqDone(S))?"survey":"mic");
+  }catch(e){bad(e.message==="not_found"?"ไม่พบรหัสนี้ ตรวจสอบตัวอักษรอีกครั้ง":e.message==="rate_limited"?"มีการค้นหามากเกินไป รอสักครู่แล้วลองใหม่":"ค้นหาไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่");}
+  finally{b.disabled=false;b.textContent="ทำต่อด้วยรหัสนี้";}
+};
+async function finishSession(){busy=true;renderBar();await enqueueForm();busy=false;go("done");flushQueue();}
+async function renderUploads(){
+  if(S.step==="done"){
+    const rows=[];const names={PFT:"เสียงพูดข้อ 1 คำขึ้นต้นด้วย ก",CTD:"เสียงพูดข้อ 2 เล่าภาพ",SFT:"เสียงพูดข้อ 3 ชื่อสัตว์"};
+    for(const p of ["PFT","CTD","SFT"]){const a=activeOf(S,p);
+      const s=a?a.upload:"none";rows.push(`<li><span>${names[p]}</span><span class="${s==="sent"?"s-ok":s==="none"||s==="rejected"?"s-bad":"s-wait"}">${s==="none"?"ยังไม่ได้บันทึก":uploadLabel(s,a.uploadError)}</span></li>`);}
+    const n=await pendingCount();
+    rows.push(`<li><span>ข้อมูลผู้เข้าร่วมและแบบสอบถาม</span><span class="${n&&(await Q.all()).some(j=>j.kind==="form")?"s-wait":"s-ok"}">${(await Q.all()).some(j=>j.kind==="form")?"กำลังส่งข้อมูล…":"ส่งข้อมูลแล้ว"}</span></li>`);
+    $("uplList").innerHTML=rows.join("");
+    $("uplSummary").textContent=n?`ยังเหลือ ${n} รายการ โปรดเปิดหน้านี้ไว้จนส่งครบ`:"ส่งข้อมูลครบทุกรายการแล้ว ปิดหน้านี้ได้";
+    $("btnRetryAll").hidden=!n;
+  }
+  if($("dlgStaff").open)renderStaff();
+}
+$("btnRetryAll").onclick=()=>flushQueue();
+$("btnNextPerson").onclick=async()=>{const n=await pendingCount();if(n&&!confirm(`ยังส่งข้อมูลไม่ครบ ${n} รายการ ระบบจะเก็บไว้และส่งต่อให้อัตโนมัติ เริ่มผู้เข้าร่วมคนใหม่หรือไม่`))return;resetSession();};
+
+/* ---------- read-aloud buttons ---------- */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-say]");if(!b)return;const k=b.dataset.say;
+  if(k==="consent")say(CONSENT_SAY);
+  else if(k==="question")say(`${S.iq.mode==="self"?"เทียบกับเมื่อสิบปีก่อน ตัวท่านตอนนี้เป็นอย่างไร":"เทียบกับเมื่อสิบปีก่อน ผู้เข้าร่วมทดสอบตอนนี้เป็นอย่างไร"} ข้อ ${S.qIndex+1} ${IQ_ITEMS[S.qIndex]} ตอบได้ว่า ${iqChoices().map(c=>c.text).join(" ")} หรือ ไม่แน่ใจ`);
+  else if(k.startsWith("task:"))say(TASKS[k.slice(5)].say);
+});
+
+/* ---------- display settings ---------- */
+function applyPrefs(){const r=document.documentElement;r.classList.remove("fs-1","fs-2");if(prefs.fs)r.classList.add("fs-"+prefs.fs);r.classList.toggle("hc",!!prefs.hc);$("btnContrast").setAttribute("aria-pressed",String(!!prefs.hc));document.querySelectorAll("[data-fs]").forEach(b=>b.setAttribute("aria-pressed",String(Number(b.dataset.fs)===(prefs.fs||0))));}
+document.querySelectorAll("[data-fs]").forEach(b=>b.onclick=()=>{prefs.fs=Number(b.dataset.fs);savePrefs();applyPrefs();});
+$("btnContrast").onclick=()=>{prefs.hc=!prefs.hc;savePrefs();applyPrefs();};
+
+/* ---------- staff mode ---------- */
+$("btnStaff").onclick=()=>{if(sessionStorage.getItem("sds_staff_key")){openStaff();return;}$("pin").value="";$("pin").closest(".field").classList.remove("bad");$("dlgPin").showModal();};
+$("pinForm").addEventListener("submit",e=>{
+  if(e.submitter&&e.submitter.value==="cancel")return;
+  e.preventDefault();
+  const key=$("pin").value.trim(),f=$("pin").closest(".field"),errEl=f.querySelector(".err");
+  if(!key){f.classList.add("bad");return;}
+  $("pinOk").disabled=true;
+  postJSON({type:"staffcheck",staffKey:key}).then(js=>{
+    if(js.valid){sessionStorage.setItem("sds_staff_key",key);$("dlgPin").close();openStaff();["PFT","CTD","SFT"].forEach(p=>{if(S.step===p)updateTaskResult(p);});}
+    else{errEl.textContent="รหัสไม่ถูกต้อง";f.classList.add("bad");}
+  }).catch(()=>{errEl.textContent="ตรวจรหัสไม่ได้ ต้องเชื่อมต่ออินเทอร์เน็ต";f.classList.add("bad");}).finally(()=>{$("pinOk").disabled=false;});
+});
+function openStaff(){
+  const st=S.staff;$("stSid").value=S.sid;$("stStaffId").value=st.staffId||"";$("stSite").value=st.site||"";$("stEnv").value=st.env||"";
+  $("stTMSE").value=st.tmse||"";$("stMMSE").value=st.mmse||"";$("stMmseEdu").value=st.mmseEdu||"";$("stMmseOri").value=st.mmseOri||"";$("stMmseRec").value=st.mmseRec||"";$("stMocaCert").value=st.mocaCert||"";mmseInterp();$("stMoCA").value=st.moca||"";$("stGroup").value=st.group||"";$("stDxSrc").value=st.dxSrc||"";$("stDxDate").value=st.dxDate||"";$("stNotes").value=st.notes||"";
+  renderStaff();$("dlgStaff").showModal();
+}
+function iqStaffText(){const iq=S.iq||{};if(!iq.mode)return"ยังไม่ทำ";if(iq.mode==="later")return"ผู้ให้ข้อมูลจะตอบภายหลัง";
+  const sc=iqScore(S);const who=iq.mode==="self"?"ตอบเอง (ฉบับดัดแปลง)":iq.type;
+  return`${who} · ตอบ ${sc.done}/16 · ค่าเฉลี่ย ${sc.mean===null?"-":sc.mean.toFixed(2)}${sc.unknown?` · ไม่แน่ใจ ${sc.unknown} ข้อ`:""}${sc.insufficient?" · ข้อมูลไม่พอ":""}`;}
+async function renderStaff(){
+  const lbl=(RAIL.find(r=>r[0]===S.step)||[,"หน้าแรก"])[1];const n=await pendingCount();
+  $("stInfo").innerHTML=`<dt>เริ่ม</dt><dd>${new Date(S.startedISO).toLocaleString("th-TH")}</dd><dt>ขั้นปัจจุบัน</dt><dd>${lbl}</dd><dt>IQCODE</dt><dd>${iqStaffText()}</dd><dt>ทดสอบเสียง</dt><dd>${S.mic?S.mic.QC_Status+(S.mic.SNR_dB!=null?" (SNR "+S.mic.SNR_dB+" dB)":""):(S.micOverride?"ข้าม":"ยังไม่ทดสอบ")}</dd><dt>รอส่ง</dt><dd>${n} รายการ</dd>`;
+  const rows=[];for(const p of ["PFT","CTD","SFT"])S.tasks[p].forEach(a=>rows.push(`<tr><td>${p}${a.deleted?" (ลบแล้ว)":activeOf(S,p)===a?" ✓":""}</td><td>${a.attempt}</td><td>${a.qc.QC_Status}${a.qc.QC_Reasons?" – "+a.qc.QC_Reasons:""}</td><td>${a.qc.SpeechSec}</td><td>${uploadLabel(a.upload)}</td></tr>`));
+  $("stAtt").innerHTML=rows.join("")||`<tr><td colspan="5">ยังไม่มีไฟล์เสียง</td></tr>`;
+}
+$("stClose").onclick=()=>$("dlgStaff").close();
+/* จุดตัด MMSE-Thai 2002 ตามคู่มือคัดกรองและประเมินสุขภาพผู้สูงอายุ พ.ศ. 2564 */
+function mmseInterp(){
+  const v=$("stMMSE").value.trim(),e=$("stMmseEdu").value,el=$("stMmseInterp");
+  if(!v||!e){el.textContent="";return"";}
+  const cut={none:14,primary:17,above:22}[e];const r=Number(v)<=cut?`ต่ำกว่าหรือเท่ากับจุดตัด (≤${cut}) สงสัยภาวะสมองเสื่อม`:`สูงกว่าจุดตัด (≤${cut})`;
+  el.textContent=`แปลผลตามคู่มือกระทรวงสาธารณสุข 2564: ${r}`;return Number(v)<=cut?"below_cutoff":"above_cutoff";
+}
+["stMMSE","stMmseEdu"].forEach(id=>$(id).addEventListener("input",mmseInterp));
+$("pinCancel").onclick=()=>$("dlgPin").close();
+$("stSave").onclick=()=>{
+  const newSid=$("stSid").value.trim();
+  if(newSid&&newSid!==S.sid){if(S.everSent||S.resumedFromServer||Object.values(S.tasks).some(L=>L.length)){toast("เปลี่ยนรหัสไม่ได้ เพราะส่งข้อมูลด้วยรหัสเดิมไปแล้ว");$("stSid").value=S.sid;}else if(!/^[A-Za-z0-9][A-Za-z0-9\-]{3,39}$/.test(newSid)){toast("รหัสใช้ได้เฉพาะ A–Z, 0–9 และ - ยาว 4–40 ตัว");$("stSid").value=S.sid;}else{S.sid=newSid;}}
+  for(const [id,lab] of [["stTMSE","TMSE"],["stMoCA","MoCA"]]){const v=$(id).value.trim();const f=$(id).closest(".field");const okv=v===""||(Number.isInteger(Number(v))&&Number(v)>=0&&Number(v)<=30);f.classList.toggle("bad",!okv);if(!okv){toast(`คะแนน ${lab} ต้องเป็นจำนวนเต็ม 0–30`);$(id).focus();return;}}
+  const intInRange=(id,max)=>{const v=$(id).value.trim();const okv=v===""||(Number.isInteger(Number(v))&&Number(v)>=0&&Number(v)<=max);$(id).closest(".field").classList.toggle("bad",!okv);return okv;};
+  const mmMax=$("stMmseEdu").value==="none"?23:30;
+  if(!intInRange("stMMSE",mmMax)||!intInRange("stMmseOri",10)||!intInRange("stMmseRec",3)){toast("ตรวจคะแนน MMSE-Thai 2002 อีกครั้ง");return;}
+  if($("stMMSE").value.trim()&&!$("stMmseEdu").value){toast("เลือกกลุ่มการศึกษาของ MMSE-Thai 2002 ก่อน");$("stMmseEdu").focus();return;}
+  S.staff={mmse:$("stMMSE").value.trim(),mmseEdu:$("stMmseEdu").value,mmseOri:$("stMmseOri").value.trim(),mmseRec:$("stMmseRec").value.trim(),mmseInterp:mmseInterp(),mocaCert:$("stMocaCert").value,staffId:$("stStaffId").value.trim(),site:$("stSite").value.trim(),env:$("stEnv").value,tmse:$("stTMSE").value.trim(),moca:$("stMoCA").value.trim(),group:$("stGroup").value,dxSrc:$("stDxSrc").value,dxDate:$("stDxDate").value.trim(),notes:$("stNotes").value.trim()};
+  persist();if(S.consentJoin&&S.consentAudio){enqueueForm();toast("บันทึกข้อมูลเจ้าหน้าที่แล้ว");}else toast("บันทึกบนเครื่องแล้ว จะส่งเมื่อผู้เข้าร่วมยินยอม");
+  renderStaff();
+};
+$("stSkip").onclick=()=>{if(busy){toast("กำลังบันทึกเสียงอยู่ รอให้ครบเวลาหรือกดยกเลิกก่อน");return;}const i=STEPS.indexOf(S.step);if(S.step==="mic")S.micOverride=true;if(TASKS[S.step]){const a=activeOf(S,S.step);if(a&&!a.remote)a.override=true;}if(i<STEPS.length-1){$("dlgStaff").close();if(S.step==="SFT")finishSession();else go(STEPS[i+1]);}};
+$("stNew").onclick=async()=>{if(busy){toast("กำลังบันทึกเสียงอยู่ รอให้ครบเวลาหรือกดยกเลิกก่อน");return;}const n=await pendingCount();if(!confirm(n?`ยังส่งไม่ครบ ${n} รายการ (ระบบจะเก็บไว้ส่งต่อ) เริ่มผู้เข้าร่วมคนใหม่หรือไม่`:"เริ่มผู้เข้าร่วมคนใหม่หรือไม่"))return;$("dlgStaff").close();resetSession();};
+
+/* ---------- warn before leaving with unsent data / during recording ---------- */
+window.addEventListener("beforeunload",e=>{if(busy||Q.mem.size){e.preventDefault();e.returnValue="";}});
+
+/* ---------- init ---------- */
+$("hdrOrg").textContent=CONFIG.organization;$("welcomeProject").textContent="โครงการ"+CONFIG.projectTitle;if(CONFIG.logo){$("logo").src=CONFIG.logo;$("logo").hidden=false;}
+$("cProject").textContent=CONFIG.projectTitle;$("cRetention").textContent=CONFIG.retention;
+$("cAuthor").innerHTML="";$("cAuthor").append(CONFIG.author,document.createElement("br"),CONFIG.authorStatus);
+$("cContact").innerHTML="";$("cContact").append(`ชื่อผู้จัดทำ: ${CONFIG.author}`,document.createElement("br"),`โทรศัพท์: ${CONFIG.phone}`,document.createElement("br"),`อีเมล: ${CONFIG.email}`);
+applyPrefs();fillAllInputs();
+if(window.speechSynthesis)speechSynthesis.getVoices();
+go(hadSaved?"welcome":S.step);
+renderNet();flushQueue();
+</script>
+</body>
+</html>
