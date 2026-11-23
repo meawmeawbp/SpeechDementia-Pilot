@@ -386,7 +386,7 @@ dialog::backdrop{background:rgba(10,37,64,.6)}
         <li><b>ทำแบบทดสอบการพูด 3 รายการ</b> รายการละประมาณ 1 นาที ได้แก่
           <ul>
             <li>การพูดคำที่ขึ้นต้นด้วยเสียงพยัญชนะที่กำหนด (Phonemic Fluency Test: PFT) โดยใช้เสียง “ก”</li>
-            <li>การบรรยายภาพ Cookie Theft (Cookie Theft Picture Description)</li>
+            <li>การบรรยายภาพ (Picture Description) ด้วยภาพ Updated Cookie Theft ที่เผยแพร่แบบเปิด (CC BY 4.0)</li>
             <li>การพูดชื่อสัตว์ให้ได้มากที่สุดภายในเวลาที่กำหนด (Semantic Fluency Test: SFT)</li>
           </ul>
         </li>
@@ -643,8 +643,8 @@ const CONFIG={
   email:"meawmeawbp@gmail.com",
   retention:"1 ปี นับจากวันที่เก็บข้อมูล",
   logo:"",                        // ใส่ path โลโก้หน่วยงาน เช่น "logo.png" (เว้นว่าง = ไม่แสดง)
-  ctdImage:"ctd.jpg",             // วางไฟล์ภาพบรรยายภาพที่มีสิทธิ์ใช้ ไว้ในโฟลเดอร์เดียวกัน
-  ctdFallback:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/13E17/production/_114913418_cookietheft.jpg.webp",
+  ctdImage:"ctd.jpg",             // ภาพ Updated Cookie Theft (Heyselaar, Segaert & Wheeldon, OSF) สัญญาอนุญาต CC BY 4.0
+  ctdFallback:"",                 // ไม่ใช้ภาพสำรองจากเว็บภายนอก
   recordSec:60,
   webapp:"https://script.google.com/macros/s/AKfycbxqWMhN5D7CKz17t3IwzR7N5D_lmYlla5IM6hxuj-GDJKpuIkb4dJMkt86nWYLNBUbOMg/exec"
 };
@@ -1128,7 +1128,7 @@ function renderTask(p){
     <h1 id="h-${p}">${T.title}</h1>
     <div class="panel"><div class="panel-h"><h2>คำชี้แจง</h2><button class="btn2" data-say="task:${p}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>อ่านออกเสียง</button></div><div class="panel-b">${T.body}</div></div>
     <div class="task-grid${p==="CTD"?" ctd":""}">
-      ${p==="CTD"?`<figure class="ctd-fig"><img id="ctdImg" alt="ภาพสำหรับเล่า"><figcaption>ภาพสำหรับแบบทดสอบการเล่าภาพ</figcaption></figure>`:""}
+      ${p==="CTD"?`<figure class="ctd-fig"><img id="ctdImg" alt="ภาพสำหรับเล่า"><figcaption>ภาพสำหรับแบบทดสอบการเล่าภาพ<br><span style="font-size:.62rem">ภาพ: Updated Cookie Theft picture โดย E. Heyselaar, K. Segaert และ L. Wheeldon (<a href="https://doi.org/10.17605/OSF.IO/SHWCN" target="_blank" rel="noopener">OSF</a>) ใช้ภายใต้สัญญาอนุญาต <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> ไม่ได้ดัดแปลงเนื้อหาภาพ</span></figcaption></figure>`:""}
       <div>
         <div class="console" id="con-${p}" data-state="idle">
           <div class="c-top"><span class="c-state"><i></i><span id="cst-${p}"></span></span><span>เวลาบันทึก 1 นาที</span></div>
@@ -1142,7 +1142,7 @@ function renderTask(p){
         <div id="res-${p}"></div>
       </div>
     </div>`;
-  if(p==="CTD"){const img=$("ctdImg");img.onerror=()=>{if(img.dataset.fb){img.replaceWith(Object.assign(document.createElement("div"),{className:"ctd-missing",textContent:"ไม่พบไฟล์ภาพ ให้วางไฟล์ ctd.jpg ไว้ในโฟลเดอร์เดียวกับหน้านี้"}));return;}img.dataset.fb="1";img.src=CONFIG.ctdFallback;};img.src=CONFIG.ctdImage;}
+  if(p==="CTD"){const img=$("ctdImg");img.onerror=()=>{if(img.dataset.fb||!CONFIG.ctdFallback){img.replaceWith(Object.assign(document.createElement("div"),{className:"ctd-missing",textContent:"ไม่พบไฟล์ภาพ ให้วางไฟล์ ctd.jpg ไว้ในโฟลเดอร์เดียวกับหน้านี้"}));return;}img.dataset.fb="1";img.src=CONFIG.ctdFallback;};img.src=CONFIG.ctdImage;}
   $("rec-"+p).onclick=()=>startTask(p);
   $("cancel-"+p).onclick=()=>{if(live[p]){live[p].cancelled=true;if(live[p].end)live[p].end();}};
   setDial(p,"idle");updateTaskResult(p);
