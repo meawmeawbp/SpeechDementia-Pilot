@@ -12,6 +12,11 @@
 
 repo นี้ไม่มีข้อมูลผู้เข้าร่วมใด ๆ ข้อมูลทั้งหมดเก็บใน Google Drive ที่จำกัดสิทธิ์
 
+โหมดทดลอง
+- เปิด https://meawmeawbp.github.io/SpeechDementia-Pilot/?demo=1 เพื่อกดทดสอบได้ทุกขั้นตอน รวมถึงการอัดเสียง
+- ในโหมดนี้ ไม่มีข้อมูลหรือไฟล์เสียงถูกส่งไปที่ Google Apps Script / Google Drive เลย และใช้พื้นที่เก็บในเครื่องแยกจากโหมดจริง
+- ลิงก์ปกติ (ไม่มี ?demo=1) ยังบันทึกข้อมูลตามเดิม
+
 เครดิตภาพ
 - `ctd.jpg` คือภาพ Updated Cookie Theft picture โดย Evelien Heyselaar, Katrien Segaert และ Linda Wheeldon เผยแพร่ที่ Open Science Framework (https://doi.org/10.17605/OSF.IO/SHWCN) ใช้ภายใต้สัญญาอนุญาต Creative Commons Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/) บันทึกใหม่เป็น JPEG โดยไม่ได้ดัดแปลงเนื้อหาภาพ
 - เว็บนี้ไม่ใช้ภาพ Cookie Theft ต้นฉบับจาก Boston Diagnostic Aphasia Examination

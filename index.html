@@ -276,6 +276,10 @@ dialog::backdrop{background:rgba(10,37,64,.6)}
 </style>
 </head>
 <body>
+<div id="demoBar" hidden style="background:#FFF4CC;border-bottom:2px solid #E0A800;color:#5A4300;padding:.55rem 1rem;text-align:center;font-weight:600;line-height:1.5">
+  โหมดทดลอง: กดทดสอบได้ทุกขั้นตอน ข้อมูลและเสียงจะไม่ถูกส่งหรือบันทึกที่ใด
+  <a href="./" style="color:#5A4300;margin-left:.5rem">ออกจากโหมดทดลอง</a>
+</div>
 <header class="gov">
   <div class="gov-in">
     <div class="brand">
@@ -707,7 +711,10 @@ const STEPS=["welcome","consent","profile","survey","mic","PFT","CTD","SFT","don
 const RAIL=[["consent","ข้อมูลโครงการและความยินยอม"],["profile","ข้อมูลผู้เข้าร่วม"],["survey","แบบสอบถาม"],["mic","ทดสอบไมโครโฟน"],["PFT","พูดข้อ 1 คำขึ้นต้นด้วย ก"],["CTD","พูดข้อ 2 เล่าภาพ"],["SFT","พูดข้อ 3 ชื่อสัตว์"],["done","เสร็จสิ้น"]];
 
 /* ================== state + บันทึกบนเครื่อง ================== */
-const LS_KEY="sds_v3_state";
+/* ---------- โหมดทดลอง: เปิดด้วย ?demo=1 ข้อมูลไม่ถูกส่งไปที่ใด ---------- */
+const DEMO=new URLSearchParams(location.search).get("demo")==="1";
+const LS_KEY=DEMO?"sds_v3_demo_state":"sds_v3_state";   // แยกจากข้อมูลจริง
+const SENT_LABEL=DEMO?"จำลองการส่ง (ไม่ได้ส่งจริง)":"ส่งข้อมูลแล้ว";
 /* ไฟล์ที่ใช้งานอยู่ของข้อนั้น (1 ข้อ = 1 ไฟล์) : ไฟล์ที่อัดในเครื่องนี้ หรือไฟล์ที่ส่งไว้แล้วจากครั้งก่อน */
 function activeOf(st,p){const L=(st.tasks[p]||[]).filter(a=>!a.deleted);const a=L[L.length-1];if(a)return a;const r=st.remote&&st.remote[p];return r?Object.assign({remote:true,upload:"sent"},r):null;}
 function tasksDoneOf(st){return["PFT","CTD","SFT"].filter(p=>{const a=activeOf(st,p);return a&&(a.qc&&a.qc.QC_Status!=="FAIL"||a.override||a.remote);});}
@@ -730,7 +737,7 @@ function savePrefs(){try{localStorage.setItem("sds_v3_prefs",JSON.stringify(pref
 
 /* ================== คิวส่งข้อมูล (IndexedDB) — ส่งซ้ำอัตโนมัติเมื่อเน็ตกลับมา ================== */
 const Q={db:null,mem:new Map(),
-  async open(){if(this.db||!window.indexedDB)return this.db;return this.db=await new Promise(res=>{const r=indexedDB.open("sds_v3_queue",1);r.onupgradeneeded=()=>r.result.createObjectStore("jobs",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);});},
+  async open(){if(this.db||!window.indexedDB)return this.db;return this.db=await new Promise(res=>{const r=indexedDB.open(DEMO?"sds_v3_demo_queue":"sds_v3_queue",1);r.onupgradeneeded=()=>r.result.createObjectStore("jobs",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);});},
   async put(job){this.mem.set(job.id,job);const db=await this.open();if(!db)return;await new Promise(res=>{const t=db.transaction("jobs","readwrite");t.objectStore("jobs").put(job);t.oncomplete=res;t.onerror=res;});},
   async del(id){this.mem.delete(id);const db=await this.open();if(!db)return;await new Promise(res=>{const t=db.transaction("jobs","readwrite");t.objectStore("jobs").delete(id);t.oncomplete=res;t.onerror=res;});},
   async all(){const db=await this.open();if(!db)return[...this.mem.values()];return new Promise(res=>{const t=db.transaction("jobs","readonly");const r=t.objectStore("jobs").getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>res([...this.mem.values()]);});}
@@ -738,6 +745,20 @@ const Q={db:null,mem:new Map(),
 let flushing=false,flushAgain=false,inflight=null;
 const PERMANENT=["forbidden","bad_sid","bad_task","bad_wav","bad_duration","too_large","bad_code","no_consent","bad_request","unknown_type"];
 async function postJSON(obj){
+  if(DEMO){
+    // โหมดทดลอง: จำลองผลตอบกลับ ไม่ส่งข้อมูลจริง
+    await new Promise(res=>setTimeout(res,400));
+    if(obj.type==="audio"){
+      return {ok:true,filename:"DEMO_"+obj.Filename};
+    }
+    if(obj.type==="status"){
+      throw new Error("โหมดทดลองค้นหารหัสไม่ได้");
+    }
+    if(obj.type==="staffcheck"){
+      return {ok:true,valid:false};
+    }
+    return {ok:true};
+  }
   const r=await fetch(CONFIG.webapp,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(obj)});
   if(!r.ok)throw new Error("HTTP "+r.status);
   const js=await r.json().catch(()=>({}));
@@ -1263,11 +1284,21 @@ async function deleteActive(p){
   persist();flushQueue();finishDelete(p);
 }
 function finishDelete(p){queueForm();$("res-"+p).innerHTML="";setDial(p,"idle");renderBar();toast("ลบไฟล์แล้ว กดปุ่มเพื่อบันทึกใหม่");}
-function uploadLabel(s,err){return s==="sent"?"ส่งข้อมูลแล้ว":s==="error"?"ยังส่งไม่สำเร็จ จะลองส่งใหม่อัตโนมัติ":s==="rejected"?`เซิร์ฟเวอร์ไม่รับไฟล์นี้ (${err||"ไม่ทราบสาเหตุ"}) กรุณาลบแล้วบันทึกใหม่ หรือแจ้งเจ้าหน้าที่`:s==="cancelled"?"ลบแล้ว":"กำลังส่งข้อมูล…";}
+function uploadLabel(s,err){return s==="sent"?SENT_LABEL:s==="error"?"ยังส่งไม่สำเร็จ จะลองส่งใหม่อัตโนมัติ":s==="rejected"?`เซิร์ฟเวอร์ไม่รับไฟล์นี้ (${err||"ไม่ทราบสาเหตุ"}) กรุณาลบแล้วบันทึกใหม่ หรือแจ้งเจ้าหน้าที่`:s==="cancelled"?"ลบแล้ว":"กำลังส่งข้อมูล…";}
 
 /* ---------- done ---------- */
 function firstMissing(){return["PFT","CTD","SFT"].find(p=>!activeOf(S,p))||"PFT";}
 function renderDone(){
+  if(DEMO){
+    let note=$("demoDoneNote");
+    if(!note){
+      note=document.createElement("p");
+      note.id="demoDoneNote";
+      note.style.cssText="background:#FFF4CC;border:1px solid #E0A800;padding:.6rem .8rem;border-radius:4px";
+      note.textContent="โหมดทดลอง: ไม่มีข้อมูลหรือเสียงถูกส่งไปที่ใด";
+      $("h-done").after(note);
+    }
+  }
   const miss=["PFT","CTD","SFT"].filter(p=>!activeOf(S,p));
   $("h-done").textContent=miss.length?"บันทึกไว้แล้วบางส่วน":"บันทึกการทดสอบครบเรียบร้อย";
   $("doneMissing").hidden=!miss.length;$("doneCode").hidden=!miss.length;
@@ -1313,9 +1344,9 @@ async function renderUploads(){
     for(const p of ["PFT","CTD","SFT"]){const a=activeOf(S,p);
       const s=a?a.upload:"none";rows.push(`<li><span>${names[p]}</span><span class="${s==="sent"?"s-ok":s==="none"||s==="rejected"?"s-bad":"s-wait"}">${s==="none"?"ยังไม่ได้บันทึก":uploadLabel(s,a.uploadError)}</span></li>`);}
     const n=await pendingCount();
-    rows.push(`<li><span>ข้อมูลผู้เข้าร่วมและแบบสอบถาม</span><span class="${n&&(await Q.all()).some(j=>j.kind==="form")?"s-wait":"s-ok"}">${(await Q.all()).some(j=>j.kind==="form")?"กำลังส่งข้อมูล…":"ส่งข้อมูลแล้ว"}</span></li>`);
+    rows.push(`<li><span>ข้อมูลผู้เข้าร่วมและแบบสอบถาม</span><span class="${n&&(await Q.all()).some(j=>j.kind==="form")?"s-wait":"s-ok"}">${(await Q.all()).some(j=>j.kind==="form")?"กำลังส่งข้อมูล…":SENT_LABEL}</span></li>`);
     $("uplList").innerHTML=rows.join("");
-    $("uplSummary").textContent=n?`ยังเหลือ ${n} รายการ โปรดเปิดหน้านี้ไว้จนส่งครบ`:"ส่งข้อมูลครบทุกรายการแล้ว ปิดหน้านี้ได้";
+    $("uplSummary").textContent=n?`ยังเหลือ ${n} รายการ โปรดเปิดหน้านี้ไว้จนส่งครบ`:(DEMO?"โหมดทดลอง: จำลองการส่งครบแล้ว ไม่มีข้อมูลถูกส่งจริง":"ส่งข้อมูลครบทุกรายการแล้ว ปิดหน้านี้ได้");
     $("btnRetryAll").hidden=!n;
   }
   if($("dlgStaff").open)renderStaff();
@@ -1400,6 +1431,11 @@ applyPrefs();fillAllInputs();
 if(window.speechSynthesis)speechSynthesis.getVoices();
 go(hadSaved?"welcome":S.step);
 renderNet();flushQueue();
+
+if(DEMO){
+  $("demoBar").hidden=false;
+  document.title="[โหมดทดลอง] "+document.title;
+}
 </script>
 </body>
 </html>
